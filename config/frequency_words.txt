@@ -1,4 +1,4 @@
-eur 
-gold
-bitcoin
+유로달러
+금
+비트코인
 fed
