@@ -552,7 +552,7 @@ ai_translation:
   # standalone: 独立展示区（热榜平台 + RSS 源）
   # 如果 display.regions 关闭了显示，那么这边即使开启了也不会翻译
   scope:
-    hotlist: false                  # 热榜区域
+    hotlist: true                   # 热榜区域
     rss: true                      # RSS 区域
     standalone: true               # 独立展示区
 
