@@ -112,14 +112,18 @@ rss:
   # - 不配置：使用全局 freshness_filter.max_age_days（默认 3 天）
   # - 正整数：覆盖全局设置，只推送此天数内的文章
   # - 0：禁用此频道的新鲜度过滤，推送所有文章
-  feeds:
-    - name: "연합뉴스 주요이슈"
+feeds:
+    - id: "yonhap"                         # ← id 추가!
+      name: "연합뉴스 주요이슈"
       url: "https://www.yonhapnewstv.co.kr/hot-issue/feed/"
-    - name: "네이버 뉴스(경제)"
+    - id: "naver-economy"                  # ← id 추가!
+      name: "네이버 뉴스(경제)"
       url: "https://news.naver.com/rss/sections/101.xml"
-    - name: "매일경제"
+    - id: "mk-news"                        # ← id 추가!
+      name: "매일경제"
       url: "https://www.mk.co.kr/rss/30100041/"
-    - name: "KBS 뉴스"
+    - id: "kbs-news"                       # ← id 추가!
+      name: "KBS 뉴스"
       url: "https://news.kbs.co.kr/rss/news_00.xml"
     - id: "hacker-news"
       name: "Hacker News"
