@@ -113,21 +113,15 @@ rss:
   # - 正整数：覆盖全局设置，只推送此天数内的文章
   # - 0：禁用此频道的新鲜度过滤，推送所有文章
   feeds:
-    - id: "yonhap"                         # ← id 추가!
-      name: "연합뉴스 주요이슈"
-      url: "https://www.yonhapnewstv.co.kr/hot-issue/feed/"
-    - id: "naver-economy"                  # ← id 추가!
-      name: "네이버 뉴스(경제)"
-      url: "https://news.naver.com/rss/sections/101.xml"
-    - id: "mk-news"                        # ← id 추가!
+    - id: "yonhap"
+      name: "연합뉴스"
+      url: "https://www.yonhapnews.co.kr/rss/economy.xml"  # 변경
+    - id: "mk-news"
       name: "매일경제"
-      url: "https://www.mk.co.kr/rss/30100041/"
-    - id: "kbs-news"                       # ← id 추가!
-      name: "KBS 뉴스"
-      url: "https://news.kbs.co.kr/rss/news_00.xml"
+      url: "https://www.mk.co.kr/rss/30100041/"            # ✅ 정상 유지
     - id: "hacker-news"
       name: "Hacker News"
-      url: "https://hnrss.org/frontpage"
+      url: "https://hnrss.org/frontpage"                   # ✅ 정상 유지
 
     - id: "ruanyifeng"
       name: "阮一峰的网络日志"
