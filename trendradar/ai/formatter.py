@@ -109,7 +109,7 @@ def render_ai_analysis_markdown(result: AIAnalysisResult) -> str:
     if result.standalone_summaries:
         summaries_text = _format_standalone_summaries(result.standalone_summaries)
         if summaries_text:
-            lines.extend(["**独立源点速览**", summaries_text])
+            lines.extend(["**독립 출처 요약**", summaries_text])
 
     return "\n".join(lines)
 
@@ -147,7 +147,7 @@ def render_ai_analysis_feishu(result: AIAnalysisResult) -> str:
     if result.standalone_summaries:
         summaries_text = _format_standalone_summaries(result.standalone_summaries)
         if summaries_text:
-            lines.extend(["**独立源点速览**", summaries_text])
+            lines.extend(["**독립 출처 요약**", summaries_text])
 
     return "\n".join(lines)
 
@@ -191,7 +191,7 @@ def render_ai_analysis_dingtalk(result: AIAnalysisResult) -> str:
     if result.standalone_summaries:
         summaries_text = _format_standalone_summaries(result.standalone_summaries)
         if summaries_text:
-            lines.extend(["#### 独立源点速览", summaries_text])
+            lines.extend(["#### 독립 출처 요약", summaries_text])
 
     return "\n".join(lines)
 
@@ -274,7 +274,7 @@ def render_ai_analysis_html(result: AIAnalysisResult) -> str:
             html_parts.extend(
                 [
                     '<div class="ai-section">',
-                    "<h4>独立源点速览</h4>",
+                    "<h4>독립 출처 요약</h4>",
                     f'<div class="ai-content">{summaries_html}</div>',
                     "</div>",
                 ]
@@ -313,7 +313,7 @@ def render_ai_analysis_plain(result: AIAnalysisResult) -> str:
     if result.standalone_summaries:
         summaries_text = _format_standalone_summaries(result.standalone_summaries)
         if summaries_text:
-            lines.extend(["[独立源点速览]", summaries_text])
+            lines.extend(["[독립 출처 요약]", summaries_text])
 
     return "\n".join(lines)
 
@@ -350,7 +350,7 @@ def render_ai_analysis_telegram(result: AIAnalysisResult) -> str:
     if result.standalone_summaries:
         summaries_text = _format_standalone_summaries(result.standalone_summaries)
         if summaries_text:
-            lines.extend(["<b>独立源点速览</b>", _escape_html(summaries_text)])
+            lines.extend(["<b>독립 출처 요약</b>", _escape_html(summaries_text)])
 
     return "\n".join(lines)
 
@@ -447,7 +447,7 @@ def render_ai_analysis_html_rich(result: AIAnalysisResult) -> str:
             summaries_html = _escape_html(summaries_text).replace("\n", "<br>")
             ai_html += f"""
                     <div class="ai-block">
-                        <div class="ai-block-title">独立源点速览</div>
+                        <div class="ai-block-title">독립 출처 요약</div>
                         <div class="ai-block-content">{summaries_html}</div>
                     </div>"""
 

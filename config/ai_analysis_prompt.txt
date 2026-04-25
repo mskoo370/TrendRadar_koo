@@ -187,6 +187,8 @@
 ```
 
 要求：
-- 使用 {language} 输出，语言简练专业
+- CRITICAL: You MUST write ALL analysis text inside the JSON in KOREAN (한국어) ONLY.
+- DO NOT USE CHINESE. This is an absolute constraint. 
+- 모든 분석 결과와 문장은 반드시 100% 한국어로만 작성하세요. 중국어가 한 글자라도 포함되면 안 됩니다.
 - 6个板块内容不重叠不冗余
-- 若某板块无明显内容，可简写"暂无显著异常"
+- 若某板块无明显内容，可简写"특이사항 없음"
