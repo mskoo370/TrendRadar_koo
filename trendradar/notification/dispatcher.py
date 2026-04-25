@@ -131,6 +131,7 @@ class NotificationDispatcher:
         # 3. RSS 统计标题
         show_rss = display_regions.get("RSS", display_regions.get("rss", True))
         can_translate_rss = scope.get("RSS", scope.get("rss", True))
+        print(f"[翻译][DEBUG] RSS check: skip_rss={skip_rss}, has_items={bool(rss_items)}, can_translate={can_translate_rss}, show_rss={show_rss}")
         if not skip_rss and rss_items and can_translate_rss and show_rss:
             print(f"[翻译][DEBUG] RSS items count: {len(rss_items)}")
             if isinstance(rss_items, list) and len(rss_items) > 0:

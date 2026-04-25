@@ -49,9 +49,9 @@ class AITranslator:
         self.ai_config = ai_config
 
         # 翻译配置
-        self.enabled = translation_config.get("ENABLED", False)
-        self.target_language = translation_config.get("LANGUAGE", "English")
-        self.scope = translation_config.get("SCOPE", {"HOTLIST": True, "RSS": True, "STANDALONE": True})
+        self.enabled = translation_config.get("ENABLED", translation_config.get("enabled", False))
+        self.target_language = translation_config.get("LANGUAGE", translation_config.get("language", "English"))
+        self.scope = translation_config.get("SCOPE", translation_config.get("scope", {"HOTLIST": True, "RSS": True, "STANDALONE": True}))
 
         # 创建 AI 客户端（基于 LiteLLM）
         self.client = AIClient(ai_config)
