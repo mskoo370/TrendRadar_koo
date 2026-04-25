@@ -125,7 +125,8 @@ class NotificationDispatcher:
                     title_locations.append(("new_titles", source_idx, title_idx))
 
         # 3. RSS 统计标题
-        if not skip_rss and rss_items and scope.get("RSS", True) and display_regions.get("RSS", True):
+        show_rss = display_regions.get("RSS", display_regions.get("rss", True))
+        if not skip_rss and rss_items and scope.get("RSS", True) and show_rss:
             if isinstance(rss_items, list) and len(rss_items) > 0 and "titles" in rss_items[0]:
                 # 结构化格式
                 for stat_idx, stat in enumerate(rss_items):
