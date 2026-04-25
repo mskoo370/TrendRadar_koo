@@ -138,7 +138,7 @@ class LocalStorageBackend(SQLiteStorageMixin, StorageBackend):
             # 输出详细的存储统计日志
             log_parts = [f"[本地存储] 处理完成：新增 {new_count} 条"]
             if updated_count > 0:
-                log_parts.append(f"更新 {updated_count} 条")
+                log_parts.append(f"업데이트  {updated_count} 条")
             if title_changed_count > 0:
                 log_parts.append(f"标题变更 {title_changed_count} 条")
             if off_list_count > 0:
@@ -207,7 +207,7 @@ class LocalStorageBackend(SQLiteStorageMixin, StorageBackend):
             # 输出统计日志
             log_parts = [f"[本地存储] RSS 处理完成：新增 {new_count} 条"]
             if updated_count > 0:
-                log_parts.append(f"更新 {updated_count} 条")
+                log_parts.append(f"업데이트  {updated_count} 条")
             print("，".join(log_parts))
 
         return success

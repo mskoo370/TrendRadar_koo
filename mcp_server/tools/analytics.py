@@ -1376,7 +1376,7 @@ class AnalyticsTools:
         Examples:
             用户询问示例：
             - "统计各平台今天的活跃度"
-            - "看看哪个平台更新最频繁"
+            - "看看哪个平台업데이트 最频繁"
             - "分析各平台的发布时间规律"
 
             代码调用示例：
@@ -1418,7 +1418,7 @@ class AnalyticsTools:
                         platform_activity[platform_name]["news_count"] += len(titles)
                         platform_activity[platform_name]["days_active"].add(current_date.strftime("%Y-%m-%d"))
 
-                        # 统计更新次数（基于文件数量）
+                        # 统计업데이트 次数（基于文件数量）
                         platform_activity[platform_name]["total_updates"] += len(timestamps)
 
                         # 统计时间分布（基于文件名中的时间）

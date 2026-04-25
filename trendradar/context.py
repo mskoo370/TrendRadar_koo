@@ -420,7 +420,7 @@ class AppContext:
         Args:
             report_data: 报告数据
             format_type: 格式类型
-            update_info: 更新信息
+            update_info: 업데이트 信息
             max_bytes: 最大字节数
             mode: 报告模式
             rss_items: RSS 统计条目列表
@@ -596,13 +596,13 @@ class AppContext:
                 saved_count = storage.save_ai_filter_tags(tags_data, new_version, current_hash, interests_file=effective_interests_file)
                 print(f"[AI筛选] 已保存 {saved_count} 个标签 (版本 {new_version})")
             else:
-                # 兴趣描述已变更，让 AI 对比旧标签和新兴趣，给出更新方案
+                # 兴趣描述已变更，让 AI 对比旧标签和新兴趣，给出업데이트 方案
                 old_tags = storage.get_active_ai_filter_tags(interests_file=effective_interests_file)
                 update_result = ai_filter.update_tags(old_tags, interests_content)
 
                 if update_result is None:
-                    # AI 标签更新失败，回退到重新提取全部标签
-                    print(f"[AI筛选] AI 标签更新失败，回退到重新提取")
+                    # AI 标签업데이트 失败，回退到重新提取全部标签
+                    print(f"[AI筛选] AI 标签업데이트 失败，回退到重新提取")
                     tags_data = ai_filter.extract_tags(interests_content)
                     if not tags_data:
                         storage.end_batch()
@@ -619,7 +619,7 @@ class AppContext:
                     remove_tags = update_result["remove"]
 
                     if debug:
-                        print(f"[AI筛选][DEBUG] AI 标签更新: keep={len(keep_tags)}, add={len(add_tags)}, remove={len(remove_tags)}, change_ratio={change_ratio:.2f}, threshold={threshold:.2f}")
+                        print(f"[AI筛选][DEBUG] AI 标签업데이트 : keep={len(keep_tags)}, add={len(add_tags)}, remove={len(remove_tags)}, change_ratio={change_ratio:.2f}, threshold={threshold:.2f}")
 
                     if change_ratio >= threshold:
                         # 全量重分类：废弃所有旧标签，用 extract_tags 重新提取
@@ -634,8 +634,8 @@ class AppContext:
                         saved_count = storage.save_ai_filter_tags(tags_data, new_version, current_hash, interests_file=effective_interests_file)
                         print(f"[AI筛选] 废弃 {deprecated_count} 个旧标签, 保存 {saved_count} 个新标签 (版本 {new_version})")
                     else:
-                        # 增量更新：按 AI 指示操作
-                        print(f"[AI筛选] 兴趣文件变更: {effective_interests_file} (AI change_ratio={change_ratio:.2f} < threshold={threshold:.2f} → 增量更新)")
+                        # 增量업데이트 ：按 AI 指示操作
+                        print(f"[AI筛选] 兴趣文件变更: {effective_interests_file} (AI change_ratio={change_ratio:.2f} < threshold={threshold:.2f} → 增量업데이트 )")
                         print(f"[AI筛选]   保留 {len(keep_tags)} 个标签, 新增 {len(add_tags)} 个, 废弃 {len(remove_tags)} 个")
 
                         # 废弃 AI 标记移除的标签
@@ -647,7 +647,7 @@ class AppContext:
                                 if debug:
                                     print(f"[AI筛选][DEBUG] 废弃标签 IDs: {removed_ids}")
 
-                        # 更新保留标签的描述
+                        # 업데이트 保留标签的描述
                         keep_with_priority = []
                         if keep_tags:
                             storage.update_ai_filter_tag_descriptions(keep_tags, interests_file=effective_interests_file)
@@ -662,10 +662,10 @@ class AppContext:
                             if debug:
                                 print(f"[AI筛选][DEBUG] 新增保存 {saved_count} 个标签")
 
-                        # 更新保留标签的 hash（标记为已处理）
+                        # 업데이트 保留标签的 hash（标记为已处理）
                         storage.update_ai_filter_tags_hash(effective_interests_file, current_hash)
 
-                        # 增量更新：清除不匹配新闻的分析记录，让它们有机会被新标签集重新分析
+                        # 增量업데이트 ：清除不匹配新闻的分析记录，让它们有机会被新标签集重新分析
                         if add_tags:
                             cleared = storage.clear_unmatched_analyzed_news(interests_file=effective_interests_file)
                             if cleared > 0:

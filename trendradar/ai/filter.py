@@ -180,7 +180,7 @@ class AIFilter:
 
     def update_tags(self, old_tags: List[Dict], interests_content: str) -> Optional[Dict]:
         """
-        阶段 A'：AI 对比旧标签和新兴趣描述，给出更新方案
+        阶段 A'：AI 对比旧标签和新兴趣描述，给出업데이트 方案
 
         Args:
             old_tags: [{"tag": str, "description": str, "id": int}, ...]
@@ -194,7 +194,7 @@ class AIFilter:
             失败返回 None
         """
         if not self.update_tags_user:
-            print("[AI筛选] 标签更新提示词模板为空，回退到重新提取")
+            print("[AI筛选] 标签업데이트 提示词模板为空，回退到重新提取")
             return None
 
         # 构造旧标签 JSON
@@ -215,7 +215,7 @@ class AIFilter:
         messages.append({"role": "user", "content": user_prompt})
 
         if self.debug:
-            print(f"\n[AI筛选][DEBUG] === 标签更新 Prompt ===")
+            print(f"\n[AI筛选][DEBUG] === 标签업데이트  Prompt ===")
             for m in messages:
                 print(f"[{m['role']}]\n{m['content']}")
             print(f"[AI筛选][DEBUG] === Prompt 结束 ===")
@@ -224,7 +224,7 @@ class AIFilter:
             response = self.client.chat(messages)
 
             if self.debug:
-                print(f"\n[AI筛选][DEBUG] === 标签更新 AI 原始响应 ===")
+                print(f"\n[AI筛选][DEBUG] === 标签업데이트  AI 原始响应 ===")
                 self._print_formatted_json(response)
                 print(f"[AI筛选][DEBUG] === 响应结束 ===")
 
@@ -236,18 +236,18 @@ class AIFilter:
             add_count = len(result.get("add", []))
             remove_count = len(result.get("remove", []))
             ratio = result.get("change_ratio", 0)
-            print(f"[AI筛选] AI 标签更新方案: 保留 {keep_count}, 新增 {add_count}, 移除 {remove_count}, change_ratio={ratio:.2f}")
+            print(f"[AI筛选] AI 标签업데이트 方案: 保留 {keep_count}, 新增 {add_count}, 移除 {remove_count}, change_ratio={ratio:.2f}")
 
             return result
         except Exception as e:
-            print(f"[AI筛选] 标签更新失败: {type(e).__name__}: {e}")
+            print(f"[AI筛选] 标签업데이트 失败: {type(e).__name__}: {e}")
             return None
 
     def _parse_update_tags_response(self, response: str) -> Optional[Dict]:
-        """解析标签更新的 AI 响应"""
+        """解析标签업데이트 的 AI 响应"""
         json_str = self._extract_json(response)
         if not json_str:
-            print("[AI筛选] 无法从标签更新响应中提取 JSON")
+            print("[AI筛选] 无法从标签업데이트 响应中提取 JSON")
             return None
 
         data = json.loads(json_str)

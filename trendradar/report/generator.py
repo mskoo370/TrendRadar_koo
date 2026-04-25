@@ -170,7 +170,7 @@ def generate_html_report(
         new_titles: 新增标题
         id_to_name: ID 到名称的映射
         mode: 报告模式 (daily/incremental/current)
-        update_info: 更新信息
+        update_info: 업데이트 信息
         rank_threshold: 排名阈值
         output_dir: 输出目录
         date_folder: 日期文件夹名称

@@ -29,7 +29,7 @@ def render_feishu_content(
 
     Args:
         report_data: 报告数据字典，包含 stats, new_titles, failed_ids, total_new_count
-        update_info: 版本更新信息（可选）
+        update_info: 版本업데이트 信息（可选）
         mode: 报告模式 ("daily", "incremental", "current")
         separator: 内容分隔符
         region_order: 区域显示顺序列表
@@ -138,7 +138,7 @@ def render_feishu_content(
     # 获取현재时间
     now = get_time_func() if get_time_func else datetime.now()
     text_content += (
-        f"\n\n<font color='grey'>更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}</font>"
+        f"\n\n<font color='grey'>업데이트 시간：{now.strftime('%Y-%m-%d %H:%M:%S')}</font>"
     )
 
     if update_info:
@@ -160,7 +160,7 @@ def render_dingtalk_content(
 
     Args:
         report_data: 报告数据字典，包含 stats, new_titles, failed_ids, total_new_count
-        update_info: 版本更新信息（可选）
+        update_info: 版本업데이트 信息（可选）
         mode: 报告模式 ("daily", "incremental", "current")
         region_order: 区域显示顺序列表
         get_time_func: 获取현재时间的函数（可选，默认使用 datetime.now()）
@@ -276,7 +276,7 @@ def render_dingtalk_content(
         for i, id_value in enumerate(report_data["failed_ids"], 1):
             text_content += f"  • **{id_value}**\n"
 
-    text_content += f"\n\n> 更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+    text_content += f"\n\n> 업데이트 시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
 
     if update_info:
         text_content += f"\n> TrendRadar 새 버전 발견 **{update_info['remote_version']}**，현재 **{update_info['current_version']}**"
@@ -300,7 +300,7 @@ def _render_rss_section_feishu(rss_items: list, separator: str = "---") -> str:
             feeds_map[feed_id] = []
         feeds_map[feed_id].append(item)
 
-    text_content = f"📰 **RSS 订阅更新** (총 {len(rss_items)} 개)\n\n"
+    text_content = f"📰 **RSS 订阅업데이트 ** (총 {len(rss_items)} 개)\n\n"
 
     for feed_id, items in feeds_map.items():
         feed_name = items[0].get("feed_name", feed_id) if items else feed_id
@@ -343,7 +343,7 @@ def _render_rss_section_markdown(rss_items: list) -> str:
             feeds_map[feed_id] = []
         feeds_map[feed_id].append(item)
 
-    text_content = f"📰 **RSS 订阅更新** (총 {len(rss_items)} 개)\n\n"
+    text_content = f"📰 **RSS 订阅업데이트 ** (총 {len(rss_items)} 개)\n\n"
 
     for feed_id, items in feeds_map.items():
         feed_name = items[0].get("feed_name", feed_id) if items else feed_id

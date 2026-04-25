@@ -357,7 +357,7 @@ class RemoteStorageBackend(SQLiteStorageMixin, StorageBackend):
         """
         保存新闻数据到远程存储
 
-        流程：下载现有数据库 → 插入/更新数据 → 上传回远程存储
+        流程：下载现有数据库 → 插入/업데이트 数据 → 上传回远程存储
         """
         # 查询已有记录数
         conn = self._get_connection(data.date)
@@ -383,7 +383,7 @@ class RemoteStorageBackend(SQLiteStorageMixin, StorageBackend):
         # 输出详细的存储统计日志
         log_parts = [f"[远程存储] 处理完成：新增 {new_count} 条"]
         if updated_count > 0:
-            log_parts.append(f"更新 {updated_count} 条")
+            log_parts.append(f"업데이트  {updated_count} 条")
         if title_changed_count > 0:
             log_parts.append(f"标题变更 {title_changed_count} 条")
         if off_list_count > 0:
@@ -449,7 +449,7 @@ class RemoteStorageBackend(SQLiteStorageMixin, StorageBackend):
         """
         保存 RSS 数据到远程存储
 
-        流程：下载现有数据库 → 插入/更新数据 → 上传回远程存储
+        流程：下载现有数据库 → 插入/업데이트 数据 → 上传回远程存储
         """
         success, new_count, updated_count = self._save_rss_data_impl(data, "[远程存储]")
 
@@ -459,7 +459,7 @@ class RemoteStorageBackend(SQLiteStorageMixin, StorageBackend):
         # 输出统计日志
         log_parts = [f"[远程存储] RSS 处理完成：新增 {new_count} 条"]
         if updated_count > 0:
-            log_parts.append(f"更新 {updated_count} 条")
+            log_parts.append(f"업데이트  {updated_count} 条")
         print("，".join(log_parts))
 
         # 上传到远程存储

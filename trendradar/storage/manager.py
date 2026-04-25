@@ -332,15 +332,15 @@ class StorageManager:
         return self.get_backend().deprecate_specific_ai_filter_tags(tag_ids, date)
 
     def update_ai_filter_tags_hash(self, interests_file, new_hash, date=None):
-        """更新指定兴趣文件所有 active 标签的 prompt_hash"""
+        """업데이트 指定兴趣文件所有 active 标签的 prompt_hash"""
         return self.get_backend().update_ai_filter_tags_hash(interests_file, new_hash, date)
 
     def update_ai_filter_tag_descriptions(self, tag_updates, date=None, interests_file="ai_interests.txt"):
-        """按 tag 名匹配，更新 active 标签的 description"""
+        """按 tag 名匹配，업데이트  active 标签的 description"""
         return self.get_backend().update_ai_filter_tag_descriptions(tag_updates, date, interests_file)
 
     def update_ai_filter_tag_priorities(self, tag_priorities, date=None, interests_file="ai_interests.txt"):
-        """按 tag 名匹配，更新 active 标签的 priority"""
+        """按 tag 名匹配，업데이트  active 标签的 priority"""
         return self.get_backend().update_ai_filter_tag_priorities(tag_priorities, date, interests_file)
 
     def save_analyzed_news(self, news_ids, source_type, interests_file, prompt_hash, matched_ids, date=None):

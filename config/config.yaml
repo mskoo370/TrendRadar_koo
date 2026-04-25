@@ -58,7 +58,7 @@ platforms:
 #    - id: "toutiao"
 #      name: "今日头条"
 #    - id: "baidu"
-#      name: "百度热搜"
+#      name: "바이두热搜"
 #    - id: "wallstreetcn-hot"
 #      name: "华尔街见闻"
 #    - id: "thepaper"
@@ -72,11 +72,11 @@ platforms:
 #    - id: "tieba"
 #      name: "贴吧"
 #    - id: "weibo"
-#      name: "微博"
+#      name: "웨이보"
 #    - id: "douyin"
-#      name: "抖音"
+#      name: "도우인"
 #    - id: "zhihu"
-#      name: "知乎"
+#      name: "지후"
 
 
 
@@ -127,7 +127,7 @@ rss:
       # max_age_days: 3               # 示例：推送 3 天内的文章（更新较慢的博客）
      
     - id: "yahoo-finance"
-      name: "雅虎财经"
+      name: "야후 파이낸스"
       url: "https://finance.yahoo.com/news/rssindex"
 
     # 自定义源示例

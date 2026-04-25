@@ -371,9 +371,9 @@ class SystemManagementTools:
 
     def check_version(self, proxy_url: Optional[str] = None) -> Dict:
         """
-        检查版本更新
+        检查版本업데이트 
 
-        同时检查 TrendRadar 和 MCP Server 两个组件的版本更新。
+        同时检查 TrendRadar 和 MCP Server 两个组件的版本업데이트 。
         远程版本 URL 从 config.yaml 获取：
         - version_check_url: TrendRadar 版本
         - mcp_version_check_url: MCP Server 版本
@@ -386,7 +386,7 @@ class SystemManagementTools:
             - success: 是否成功
             - trendradar: TrendRadar 版本检查结果
             - mcp: MCP Server 版本检查结果
-            - any_update: 是否有任何组件需要更新
+            - any_update: 是否有任何组件需要업데이트 
 
         Example:
             >>> tools = SystemManagementTools()
@@ -426,7 +426,7 @@ class SystemManagementTools:
                 need_update = local_tuple < remote_tuple
 
                 if need_update:
-                    message = f"发现新版本 {remote_version}，当前版本 {local_version}，建议更新"
+                    message = f"发现新版本 {remote_version}，当前版本 {local_version}，建议업데이트 "
                 elif local_tuple > remote_tuple:
                     message = f"当前版本 {local_version} 高于远程版本 {remote_version}（可能是开发版本）"
                 else:
@@ -513,7 +513,7 @@ class SystemManagementTools:
                 "MCP Server", mcp_version, mcp_url, proxies, headers
             )
 
-            # 判断是否有任何更新
+            # 判断是否有任何업데이트 
             any_update = (
                 (trendradar_result.get("success") and trendradar_result.get("need_update", False)) or
                 (mcp_result.get("success") and mcp_result.get("need_update", False))

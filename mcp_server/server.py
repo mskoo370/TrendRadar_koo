@@ -792,15 +792,15 @@ async def check_version(
     proxy_url: Optional[str] = None
 ) -> str:
     """
-    检查版本更新（同时检查 TrendRadar 和 MCP Server）
+    检查版本업데이트 （同时检查 TrendRadar 和 MCP Server）
 
-    比较本地版本与 GitHub 远程版本，判断是否需要更新。
+    比较本地版本与 GitHub 远程版本，判断是否需要업데이트 。
 
     Args:
         proxy_url: 可选的代理URL，用于访问 GitHub（如 http://127.0.0.1:7890）
 
     Returns:
-        JSON格式的版本检查结果，包含两个组件的版本对比和是否需要更新
+        JSON格式的版本检查结果，包含两个组件的版本对比和是否需要업데이트 
 
     Examples:
         - check_version()
@@ -1181,7 +1181,7 @@ def run_server(
     print("    === 配置与系统管理 ===")
     print("    15. get_current_config      - 获取当前系统配置")
     print("    16. get_system_status       - 获取系统运行状态")
-    print("    17. check_version           - 检查版本更新（对比本地与远程版本）")
+    print("    17. check_version           - 检查版本업데이트 （对比本地与远程版本）")
     print("    18. trigger_crawl           - 手动触发爬取任务")
     print()
     print("    === 存储同步工具 ===")

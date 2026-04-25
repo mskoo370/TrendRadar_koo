@@ -34,7 +34,7 @@ def render_html_content(
         report_data: 报告数据字典，包含 stats, new_titles, failed_ids, total_new_count
         total_titles: 新闻总数
         mode: 报告模式 ("daily", "current", "incremental")
-        update_info: 更新信息（可选）
+        update_info: 업데이트 信息（可选）
         region_order: 区域显示顺序列表
         get_time_func: 获取当前时间的函数（可选，默认使用 datetime.now）
         rss_items: RSS 统计条目列表（可选）
@@ -1518,7 +1518,7 @@ def render_html_content(
                 </div>"""
 
     # 生成 RSS 统计内容
-    def render_rss_stats_html(stats: List[Dict], title: str = "RSS 订阅更新") -> str:
+    def render_rss_stats_html(stats: List[Dict], title: str = "RSS 订阅업데이트 ") -> str:
         """渲染 RSS 统计区块 HTML
 
         Args:
@@ -1874,8 +1874,8 @@ def render_html_content(
         return standalone_html
 
     # 生成 RSS 统计和新增 HTML
-    rss_stats_html = render_rss_stats_html(rss_items, "RSS 订阅更新") if rss_items else ""
-    rss_new_html = render_rss_stats_html(rss_new_items, "RSS 新增更新") if rss_new_items else ""
+    rss_stats_html = render_rss_stats_html(rss_items, "RSS 订阅업데이트 ") if rss_items else ""
+    rss_new_html = render_rss_stats_html(rss_new_items, "RSS 新增업데이트 ") if rss_new_items else ""
 
     # 生成独立展示区 HTML
     standalone_html = render_standalone_html(standalone_data)
@@ -2458,7 +2458,7 @@ def render_html_content(
                         tempContainer.appendChild(clonedContainer);
                         document.body.appendChild(tempContainer);
 
-                        // 等待DOM更新
+                        // 等待DOM업데이트 
                         await new Promise(resolve => setTimeout(resolve, 100));
 
                         // 使用html2canvas截取特定区域

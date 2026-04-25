@@ -163,7 +163,7 @@ def split_content_into_batches(
     Args:
         report_data: 报告数据字典，包含 stats, new_titles, failed_ids, total_new_count
         format_type: 格式类型 (feishu, dingtalk, wework, telegram, ntfy, bark, slack)
-        update_info: 版本更新信息（可选）
+        update_info: 版本업데이트 信息（可选）
         max_bytes: 最大字节数（可选，如果不指定则使用默认配置）
         mode: 报告模式 (daily, incremental, current)
         batch_sizes: 批次大小配置字典（可选）
@@ -279,27 +279,27 @@ def split_content_into_batches(
 
     base_footer = ""
     if format_type in ("wework", "bark"):
-        base_footer = f"\n\n\n> 更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+        base_footer = f"\n\n\n> 업데이트 시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
             base_footer += f"\n> TrendRadar 새 버전 발견 **{update_info['remote_version']}**，현재 **{update_info['current_version']}**"
     elif format_type == "telegram":
-        base_footer = f"\n\n更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+        base_footer = f"\n\n업데이트 시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
             base_footer += f"\nTrendRadar 새 버전 발견 {update_info['remote_version']}，현재 {update_info['current_version']}"
     elif format_type == "ntfy":
-        base_footer = f"\n\n> 更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+        base_footer = f"\n\n> 업데이트 시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
             base_footer += f"\n> TrendRadar 새 버전 발견 **{update_info['remote_version']}**，현재 **{update_info['current_version']}**"
     elif format_type == "feishu":
-        base_footer = f"\n\n<font color='grey'>更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}</font>"
+        base_footer = f"\n\n<font color='grey'>업데이트 시간：{now.strftime('%Y-%m-%d %H:%M:%S')}</font>"
         if update_info:
             base_footer += f"\n<font color='grey'>TrendRadar 새 버전 발견 {update_info['remote_version']}，현재 {update_info['current_version']}</font>"
     elif format_type == "dingtalk":
-        base_footer = f"\n\n> 更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+        base_footer = f"\n\n> 업데이트 시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
             base_footer += f"\n> TrendRadar 새 버전 발견 **{update_info['remote_version']}**，현재 **{update_info['current_version']}**"
     elif format_type == "slack":
-        base_footer = f"\n\n_更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}_"
+        base_footer = f"\n\n_업데이트 시간：{now.strftime('%Y-%m-%d %H:%M:%S')}_"
         if update_info:
             base_footer += f"\n_TrendRadar 새 버전 발견 *{update_info['remote_version']}*，현재 *{update_info['current_version']}_"
 

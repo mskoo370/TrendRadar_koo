@@ -232,7 +232,7 @@ class NewsData:
 
         合并规则:
         - 相同 source_id + title 的新闻合并排名历史
-        - 更新 last_time 和 count
+        - 업데이트  last_time 和 count
         - 保留较早的 first_time
         """
         merged_items = {}
@@ -263,7 +263,7 @@ class NewsData:
                     if item.last_time and (not existing.last_time or item.last_time > existing.last_time):
                         existing.last_time = item.last_time
 
-                    # 更新计数
+                    # 업데이트 计数
                     existing.count += 1
 
                     # 保留URL（如果原来没有）

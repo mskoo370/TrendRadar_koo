@@ -47,7 +47,7 @@ def _compare_version(local: str, remote: str) -> str:
     remote_tuple = _parse_version(remote)
 
     if local_tuple < remote_tuple:
-        return "⚠️ 需要更新"
+        return "⚠️ 需要업데이트 "
     elif local_tuple > remote_tuple:
         return "🔮 超前版本"
     else:
@@ -106,7 +106,7 @@ def check_all_versions(
         proxy_url: 代理 URL
 
     Returns:
-        (need_update, remote_version): 程序是否需要更新及远程版本号
+        (need_update, remote_version): 程序是否需要업데이트 及远程版本号
     """
     # 获取远程版本
     remote_version = _fetch_remote_version(version_url, proxy_url)
@@ -181,7 +181,7 @@ def check_all_versions(
 
     print("=" * 60)
 
-    # 返回程序版本的更新状态
+    # 返回程序版本的업데이트 状态
     if remote_version:
         need_update = _parse_version(__version__) < _parse_version(remote_version)
         return need_update, remote_version if need_update else None
@@ -286,7 +286,7 @@ class NewsAnalyzer:
             print("GitHub Actions环境，不使用代理")
 
     def _set_update_info_from_config(self) -> None:
-        """从已缓存的远程版本设置更新信息（不再重复请求）"""
+        """从已缓存的远程版本设置업데이트 信息（不再重复请求）"""
         try:
             version_url = self.ctx.config.get("VERSION_CHECK_URL", "")
             if not version_url:
@@ -535,7 +535,7 @@ class NewsAnalyzer:
                 ai_report_type = {
                     "daily": "当日汇总",
                     "current": "현재 랭킹",
-                    "incremental": "增量更新"
+                    "incremental": "增量업데이트 "
                 }.get(ai_mode, report_type)
             else:
                 ai_report_type = report_type
@@ -979,7 +979,7 @@ class NewsAnalyzer:
             # 准备报告数据
             report_data = self.ctx.prepare_report(stats, failed_ids, new_titles, id_to_name, mode, frequency_file=self.frequency_file)
 
-            # 是否发送版本更新信息
+            # 是否发送版本업데이트 信息
             update_info_to_send = self.update_info if cfg["SHOW_VERSION_UPDATE"] else None
 
             # 使用 NotificationDispatcher 发送到所有渠道
@@ -1678,7 +1678,7 @@ class NewsAnalyzer:
 
         if html_file:
             print(f"HTML报告已生成: {html_file}")
-            print(f"最新报告已更新: output/html/latest/{self.report_mode}.html")
+            print(f"最新报告已업데이트 : output/html/latest/{self.report_mode}.html")
 
         # 发送通知
         if mode_strategy["should_send_notification"]:
@@ -2217,7 +2217,7 @@ def main():
         # 复用已加载的配置，避免重复加载
         analyzer = NewsAnalyzer(config=config)
 
-        # 设置更新信息（复用已获取的远程版本，不再重复请求）
+        # 设置업데이트 信息（复用已获取的远程版本，不再重复请求）
         if analyzer.is_github_actions and need_update and remote_version:
             analyzer.update_info = {
                 "current_version": __version__,
