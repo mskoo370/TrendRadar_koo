@@ -33,8 +33,8 @@ def render_feishu_content(
         mode: 报告模式 ("daily", "incremental", "current")
         separator: 内容分隔符
         region_order: 区域显示顺序列表
-        get_time_func: 获取当前时间的函数（可选，默认使用 datetime.now()）
-        rss_items: RSS 条目列表（可选，用于合并推送）
+        get_time_func: 获取현재时间的函数（可选，默认使用 datetime.now()）
+        rss_items: RSS 개目列表（可选，用于合并推送）
         show_new_section: 是否显示신규 핫 트렌드区域
 
     Returns:
@@ -57,11 +57,11 @@ def render_feishu_content(
             sequence_display = f"<font color='grey'>[{i + 1}/{total_count}]</font>"
 
             if count >= 10:
-                stats_content += f"🔥 {sequence_display} **{word}** : <font color='red'>{count}</font> 条\n\n"
+                stats_content += f"🔥 {sequence_display} **{word}** : <font color='red'>{count}</font> 개\n\n"
             elif count >= 5:
-                stats_content += f"📈 {sequence_display} **{word}** : <font color='orange'>{count}</font> 条\n\n"
+                stats_content += f"📈 {sequence_display} **{word}** : <font color='orange'>{count}</font> 개\n\n"
             else:
-                stats_content += f"📌 {sequence_display} **{word}** : {count} 条\n\n"
+                stats_content += f"📌 {sequence_display} **{word}** : {count} 개\n\n"
 
             for j, title_data in enumerate(stat["titles"], 1):
                 formatted_title = format_title_for_platform(
@@ -79,12 +79,12 @@ def render_feishu_content(
     new_titles_content = ""
     if show_new_section and report_data["new_titles"]:
         new_titles_content += (
-            f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 개)\n\n"
         )
 
         for source_data in report_data["new_titles"]:
             new_titles_content += (
-                f"**{source_data['source_name']}** ({len(source_data['titles'])} 条):\n"
+                f"**{source_data['source_name']}** ({len(source_data['titles'])} 개):\n"
             )
 
             for j, title_data in enumerate(source_data["titles"], 1):
@@ -122,9 +122,9 @@ def render_feishu_content(
         if mode == "incremental":
             mode_text = "增量模式下暂无新增匹配的热点词汇"
         elif mode == "current":
-            mode_text = "현재 랭킹模式下暂无匹配的热点词汇"
+            mode_text = "현재 랭킹模式下일치하는 핫 트렌드 단어 없음"
         else:
-            mode_text = "暂无匹配的热点词汇"
+            mode_text = "일치하는 핫 트렌드 단어 없음"
         text_content = f"📭 {mode_text}\n\n"
 
     if report_data["failed_ids"]:
@@ -135,14 +135,14 @@ def render_feishu_content(
         for i, id_value in enumerate(report_data["failed_ids"], 1):
             text_content += f"  • <font color='red'>{id_value}</font>\n"
 
-    # 获取当前时间
+    # 获取현재时间
     now = get_time_func() if get_time_func else datetime.now()
     text_content += (
-        f"\n\n<font color='grey'>更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}</font>"
+        f"\n\n<font color='grey'>更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}</font>"
     )
 
     if update_info:
-        text_content += f"\n<font color='grey'>TrendRadar 发现新版本 {update_info['remote_version']}，当前 {update_info['current_version']}</font>"
+        text_content += f"\n<font color='grey'>TrendRadar 새 버전 발견 {update_info['remote_version']}，현재 {update_info['current_version']}</font>"
 
     return text_content
 
@@ -163,8 +163,8 @@ def render_dingtalk_content(
         update_info: 版本更新信息（可选）
         mode: 报告模式 ("daily", "incremental", "current")
         region_order: 区域显示顺序列表
-        get_time_func: 获取当前时间的函数（可选，默认使用 datetime.now()）
-        rss_items: RSS 条目列表（可选，用于合并推送）
+        get_time_func: 获取현재时间的函数（可选，默认使用 datetime.now()）
+        rss_items: RSS 개目列表（可选，用于合并推送）
         show_new_section: 是否显示신규 핫 트렌드区域
 
     Returns:
@@ -179,9 +179,9 @@ def render_dingtalk_content(
     now = get_time_func() if get_time_func else datetime.now()
 
     # 头部信息
-    header_content = f"**总新闻数：** {total_titles}\n\n"
-    header_content += f"**时间：** {now.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-    header_content += "**类型：** 热点分析报告\n\n"
+    header_content = f"**총 뉴스 수：** {total_titles}\n\n"
+    header_content += f"**시간：** {now.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+    header_content += "**유형：** 热点分析报告\n\n"
     header_content += "---\n\n"
 
     # 生成热点词汇统计部分
@@ -198,11 +198,11 @@ def render_dingtalk_content(
             sequence_display = f"[{i + 1}/{total_count}]"
 
             if count >= 10:
-                stats_content += f"🔥 {sequence_display} **{word}** : **{count}** 条\n\n"
+                stats_content += f"🔥 {sequence_display} **{word}** : **{count}** 개\n\n"
             elif count >= 5:
-                stats_content += f"📈 {sequence_display} **{word}** : **{count}** 条\n\n"
+                stats_content += f"📈 {sequence_display} **{word}** : **{count}** 개\n\n"
             else:
-                stats_content += f"📌 {sequence_display} **{word}** : {count} 条\n\n"
+                stats_content += f"📌 {sequence_display} **{word}** : {count} 개\n\n"
 
             for j, title_data in enumerate(stat["titles"], 1):
                 formatted_title = format_title_for_platform(
@@ -220,11 +220,11 @@ def render_dingtalk_content(
     new_titles_content = ""
     if show_new_section and report_data["new_titles"]:
         new_titles_content += (
-            f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 개)\n\n"
         )
 
         for source_data in report_data["new_titles"]:
-            new_titles_content += f"**{source_data['source_name']}** ({len(source_data['titles'])} 条):\n\n"
+            new_titles_content += f"**{source_data['source_name']}** ({len(source_data['titles'])} 개):\n\n"
 
             for j, title_data in enumerate(source_data["titles"], 1):
                 title_data_copy = title_data.copy()
@@ -263,9 +263,9 @@ def render_dingtalk_content(
         if mode == "incremental":
             mode_text = "增量模式下暂无新增匹配的热点词汇"
         elif mode == "current":
-            mode_text = "현재 랭킹模式下暂无匹配的热点词汇"
+            mode_text = "현재 랭킹模式下일치하는 핫 트렌드 단어 없음"
         else:
-            mode_text = "暂无匹配的热点词汇"
+            mode_text = "일치하는 핫 트렌드 단어 없음"
         text_content += f"📭 {mode_text}\n\n"
 
     if report_data["failed_ids"]:
@@ -276,10 +276,10 @@ def render_dingtalk_content(
         for i, id_value in enumerate(report_data["failed_ids"], 1):
             text_content += f"  • **{id_value}**\n"
 
-    text_content += f"\n\n> 更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+    text_content += f"\n\n> 更新시간：{now.strftime('%Y-%m-%d %H:%M:%S')}"
 
     if update_info:
-        text_content += f"\n> TrendRadar 发现新版本 **{update_info['remote_version']}**，当前 **{update_info['current_version']}**"
+        text_content += f"\n> TrendRadar 새 버전 발견 **{update_info['remote_version']}**，현재 **{update_info['current_version']}**"
 
     return text_content
 
@@ -300,12 +300,12 @@ def _render_rss_section_feishu(rss_items: list, separator: str = "---") -> str:
             feeds_map[feed_id] = []
         feeds_map[feed_id].append(item)
 
-    text_content = f"📰 **RSS 订阅更新** (共 {len(rss_items)} 条)\n\n"
+    text_content = f"📰 **RSS 订阅更新** (共 {len(rss_items)} 개)\n\n"
 
     for feed_id, items in feeds_map.items():
         feed_name = items[0].get("feed_name", feed_id) if items else feed_id
 
-        text_content += f"**{feed_name}** ({len(items)} 条)\n\n"
+        text_content += f"**{feed_name}** ({len(items)} 개)\n\n"
 
         for i, item in enumerate(items, 1):
             title = item.get("title", "")
@@ -343,12 +343,12 @@ def _render_rss_section_markdown(rss_items: list) -> str:
             feeds_map[feed_id] = []
         feeds_map[feed_id].append(item)
 
-    text_content = f"📰 **RSS 订阅更新** (共 {len(rss_items)} 条)\n\n"
+    text_content = f"📰 **RSS 订阅更新** (共 {len(rss_items)} 개)\n\n"
 
     for feed_id, items in feeds_map.items():
         feed_name = items[0].get("feed_name", feed_id) if items else feed_id
 
-        text_content += f"**{feed_name}** ({len(items)} 条)\n"
+        text_content += f"**{feed_name}** ({len(items)} 개)\n"
 
         for i, item in enumerate(items, 1):
             title = item.get("title", "")

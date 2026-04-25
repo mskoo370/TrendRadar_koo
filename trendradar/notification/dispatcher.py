@@ -59,7 +59,7 @@ class NotificationDispatcher:
 
         Args:
             config: 完整的配置字典，包含所有通知渠道的配置
-            get_time_func: 获取当前时间的函数
+            get_time_func: 获取현재时间的函数
             split_content_func: 内容分批函数
             translator: AI 翻译器实例（可选）
         """
@@ -83,11 +83,11 @@ class NotificationDispatcher:
 
         Args:
             report_data: 报告数据
-            rss_items: RSS 统计条目
-            rss_new_items: RSS 新增条目
-            standalone_data: 独立展示区数据
+            rss_items: RSS 统计개目
+            rss_new_items: RSS 新增개目
+            standalone_data: 독립 쇼케이스数据
             display_regions: 区域显示配置（不展示的区域跳过翻译）
-            skip_rss: 跳过 RSS 和独立展示区翻译（当数据已在上游翻译过时使用）
+            skip_rss: 跳过 RSS 和독립 쇼케이스翻译（当数据已在上游翻译过时使用）
 
         Returns:
             tuple: (翻译后的 report_data, rss_items, rss_new_items, standalone_data)
@@ -163,14 +163,14 @@ class NotificationDispatcher:
                     titles_to_translate.append(title_data.get("title", ""))
                     title_locations.append(("rss_new_items_flat", 0, title_idx))
 
-        # 5. 独立展示区 - 热榜平台
+        # 5. 독립 쇼케이스 - 热榜平台
         if standalone_data and scope.get("STANDALONE", True) and display_regions.get("STANDALONE", False):
             for plat_idx, platform in enumerate(standalone_data.get("platforms", [])):
                 for item_idx, item in enumerate(platform.get("items", [])):
                     titles_to_translate.append(item.get("title", ""))
                     title_locations.append(("standalone_platforms", plat_idx, item_idx))
 
-            # 6. 独立展示区 - RSS 源（跳过已翻译的）
+            # 6. 독립 쇼케이스 - RSS 源（跳过已翻译的）
             if not skip_rss:
                 for feed_idx, feed in enumerate(standalone_data.get("rss_feeds", [])):
                     for item_idx, item in enumerate(feed.get("items", [])):
@@ -181,7 +181,7 @@ class NotificationDispatcher:
             print("[翻译] 没有需要翻译的内容")
             return report_data, rss_items, rss_new_items, standalone_data
 
-        print(f"[翻译] 共 {len(titles_to_translate)} 条标题待翻译")
+        print(f"[翻译] 共 {len(titles_to_translate)} 개标题待翻译")
 
         # 批量翻译
         result = self.translator.translate_batch(titles_to_translate)
@@ -192,7 +192,7 @@ class NotificationDispatcher:
 
         print(f"[翻译] 翻译完成: {result.success_count}/{result.total_count} 成功")
 
-        # debug 模式：输出完整 prompt、AI 原始响应、逐条对照
+        # debug 模式：输出完整 prompt、AI 原始响应、逐개对照
         if self.config.get("DEBUG", False):
             if result.prompt:
                 print(f"[翻译][DEBUG] === 发送给 AI 的 Prompt ===")
@@ -205,8 +205,8 @@ class NotificationDispatcher:
             # 行数不匹配警告
             expected = len(titles_to_translate)
             if result.parsed_count != expected:
-                print(f"[翻译][DEBUG] ⚠️ 行数不匹配：期望 {expected} 条，AI 返回 {result.parsed_count} 条")
-            # 逐条对照
+                print(f"[翻译][DEBUG] ⚠️ 行数不匹配：期望 {expected} 개，AI 返回 {result.parsed_count} 개")
+            # 逐개对照
             unchanged_count = 0
             for i, res in enumerate(result.results):
                 if not res.success and res.error:
@@ -216,7 +216,7 @@ class NotificationDispatcher:
                 else:
                     print(f"[翻译][DEBUG] [{i+1}] {res.original_text} => {res.translated_text}")
             if unchanged_count > 0:
-                print(f"[翻译][DEBUG] （另有 {unchanged_count} 条未变化，已省略）")
+                print(f"[翻译][DEBUG] （另有 {unchanged_count} 개未变化，已省略）")
 
         # 回填翻译结果
         for i, (loc_type, idx1, idx2) in enumerate(title_locations):
@@ -256,7 +256,7 @@ class NotificationDispatcher:
         skip_translation: bool = False,
     ) -> Dict[str, bool]:
         """
-        分发通知到所有已配置的渠道（支持热榜+RSS合并推送+AI分析+独立展示区）
+        分发通知到所有已配置的渠道（支持热榜+RSS合并推送+AI分析+독립 쇼케이스）
 
         Args:
             report_data: 报告数据（由 prepare_report_data 生成）
@@ -265,10 +265,10 @@ class NotificationDispatcher:
             proxy_url: 代理 URL（可选）
             mode: 报告模式 (daily/current/incremental)
             html_file_path: HTML 报告文件路径（邮件使用）
-            rss_items: RSS 统计条目列表（用于 RSS 统计区块）
-            rss_new_items: RSS 新增条目列表（用于 RSS 新增区块）
+            rss_items: RSS 统计개目列表（用于 RSS 统计区块）
+            rss_new_items: RSS 新增개目列表（用于 RSS 新增区块）
             ai_analysis: AI 분석结果（可选）
-            standalone_data: 独立展示区数据（可选）
+            standalone_data: 독립 쇼케이스数据（可选）
             skip_translation: 跳过翻译（当数据已在上游翻译过时使用）
 
         Returns:
@@ -286,7 +286,7 @@ class NotificationDispatcher:
                 report_data, rss_items, rss_new_items, standalone_data, display_regions
             )
         else:
-            # RSS 已翻译，仅翻译热榜 report_data 和独立展示区热榜部分
+            # RSS 已翻译，仅翻译热榜 report_data 和독립 쇼케이스热榜部分
             report_data, _, _, standalone_data = self.translate_content(
                 report_data, standalone_data=standalone_data, display_regions=display_regions,
                 skip_rss=True,
@@ -427,7 +427,7 @@ class NotificationDispatcher:
         display_regions: Optional[Dict] = None,
         standalone_data: Optional[Dict] = None,
     ) -> bool:
-        """发送到飞书（多账号，支持热榜+RSS合并+AI分析+独立展示区）"""
+        """发送到飞书（多账号，支持热榜+RSS合并+AI分析+독립 쇼케이스）"""
         rd, ri, rn, ai, sd = self._apply_display_regions(
             report_data, display_regions, rss_items, rss_new_items, ai_analysis, standalone_data
         )
@@ -468,7 +468,7 @@ class NotificationDispatcher:
         display_regions: Optional[Dict] = None,
         standalone_data: Optional[Dict] = None,
     ) -> bool:
-        """发送到钉钉（多账号，支持热榜+RSS合并+AI分析+独立展示区）"""
+        """发送到钉钉（多账号，支持热榜+RSS合并+AI分析+독립 쇼케이스）"""
         rd, ri, rn, ai, sd = self._apply_display_regions(
             report_data, display_regions, rss_items, rss_new_items, ai_analysis, standalone_data
         )
@@ -508,7 +508,7 @@ class NotificationDispatcher:
         display_regions: Optional[Dict] = None,
         standalone_data: Optional[Dict] = None,
     ) -> bool:
-        """发送到企业微信（多账号，支持热榜+RSS合并+AI分析+独立展示区）"""
+        """发送到企业微信（多账号，支持热榜+RSS合并+AI分析+독립 쇼케이스）"""
         rd, ri, rn, ai, sd = self._apply_display_regions(
             report_data, display_regions, rss_items, rss_new_items, ai_analysis, standalone_data
         )
@@ -549,7 +549,7 @@ class NotificationDispatcher:
         display_regions: Optional[Dict] = None,
         standalone_data: Optional[Dict] = None,
     ) -> bool:
-        """发送到 Telegram（多账号，需验证 token 和 chat_id 配对，支持热榜+RSS合并+AI分析+独立展示区）"""
+        """发送到 Telegram（多账号，需验证 token 和 chat_id 配对，支持热榜+RSS合并+AI分析+독립 쇼케이스）"""
         report_data, rss_items, rss_new_items, ai_analysis, standalone_data = self._apply_display_regions(
             report_data, display_regions, rss_items, rss_new_items, ai_analysis, standalone_data
         )
@@ -613,7 +613,7 @@ class NotificationDispatcher:
         display_regions: Optional[Dict] = None,
         standalone_data: Optional[Dict] = None,
     ) -> bool:
-        """发送到 ntfy（多账号，需验证 topic 和 token 配对，支持热榜+RSS合并+AI分析+独立展示区）"""
+        """发送到 ntfy（多账号，需验证 topic 和 token 配对，支持热榜+RSS合并+AI分析+독립 쇼케이스）"""
         report_data, rss_items, rss_new_items, ai_analysis, standalone_data = self._apply_display_regions(
             report_data, display_regions, rss_items, rss_new_items, ai_analysis, standalone_data
         )
@@ -676,7 +676,7 @@ class NotificationDispatcher:
         display_regions: Optional[Dict] = None,
         standalone_data: Optional[Dict] = None,
     ) -> bool:
-        """发送到 Bark（多账号，支持热榜+RSS合并+AI分析+独立展示区）"""
+        """发送到 Bark（多账号，支持热榜+RSS合并+AI分析+독립 쇼케이스）"""
         rd, ri, rn, ai, sd = self._apply_display_regions(
             report_data, display_regions, rss_items, rss_new_items, ai_analysis, standalone_data
         )
@@ -716,7 +716,7 @@ class NotificationDispatcher:
         display_regions: Optional[Dict] = None,
         standalone_data: Optional[Dict] = None,
     ) -> bool:
-        """发送到 Slack（多账号，支持热榜+RSS合并+AI分析+独立展示区）"""
+        """发送到 Slack（多账号，支持热榜+RSS合并+AI分析+독립 쇼케이스）"""
         rd, ri, rn, ai, sd = self._apply_display_regions(
             report_data, display_regions, rss_items, rss_new_items, ai_analysis, standalone_data
         )
@@ -756,7 +756,7 @@ class NotificationDispatcher:
         display_regions: Optional[Dict] = None,
         standalone_data: Optional[Dict] = None,
     ) -> bool:
-        """发送到通用 Webhook（多账号，支持热榜+RSS合并+AI分析+独立展示区）"""
+        """发送到通用 Webhook（多账号，支持热榜+RSS合并+AI分析+독립 쇼케이스）"""
         report_data, rss_items, rss_new_items, ai_analysis, standalone_data = self._apply_display_regions(
             report_data, display_regions, rss_items, rss_new_items, ai_analysis, standalone_data
         )

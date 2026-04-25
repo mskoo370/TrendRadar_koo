@@ -86,7 +86,7 @@ def render_ai_analysis_markdown(result: AIAnalysisResult) -> str:
     lines = ["**✨ AI 热点分析**", ""]
 
     if result.core_trends:
-        lines.extend(["**核心热点态势**", _format_list_content(result.core_trends), ""])
+        lines.extend(["**핵심 트렌드 동향**", _format_list_content(result.core_trends), ""])
 
     if result.sentiment_controversy:
         lines.extend(
@@ -124,7 +124,7 @@ def render_ai_analysis_feishu(result: AIAnalysisResult) -> str:
     lines = ["**✨ AI 热点分析**", ""]
 
     if result.core_trends:
-        lines.extend(["**核心热点态势**", _format_list_content(result.core_trends), ""])
+        lines.extend(["**핵심 트렌드 동향**", _format_list_content(result.core_trends), ""])
 
     if result.sentiment_controversy:
         lines.extend(
@@ -163,7 +163,7 @@ def render_ai_analysis_dingtalk(result: AIAnalysisResult) -> str:
 
     if result.core_trends:
         lines.extend(
-            ["#### 核心热点态势", _format_list_content(result.core_trends), ""]
+            ["#### 핵심 트렌드 동향", _format_list_content(result.core_trends), ""]
         )
 
     if result.sentiment_controversy:
@@ -213,7 +213,7 @@ def render_ai_analysis_html(result: AIAnalysisResult) -> str:
         html_parts.extend(
             [
                 '<div class="ai-section">',
-                "<h4>核心热点态势</h4>",
+                "<h4>핵심 트렌드 동향</h4>",
                 f'<div class="ai-content">{content_html}</div>',
                 "</div>",
             ]
@@ -294,7 +294,7 @@ def render_ai_analysis_plain(result: AIAnalysisResult) -> str:
     lines = ["【✨ AI 热点分析】", ""]
 
     if result.core_trends:
-        lines.extend(["[核心热点态势]", _format_list_content(result.core_trends), ""])
+        lines.extend(["[핵심 트렌드 동향]", _format_list_content(result.core_trends), ""])
 
     if result.sentiment_controversy:
         lines.extend(
@@ -333,7 +333,7 @@ def render_ai_analysis_telegram(result: AIAnalysisResult) -> str:
     lines = ["<b>✨ AI 热点分析</b>", ""]
 
     if result.core_trends:
-        lines.extend(["<b>核心热点态势</b>", _escape_html(_format_list_content(result.core_trends)), ""])
+        lines.extend(["<b>핵심 트렌드 동향</b>", _escape_html(_format_list_content(result.core_trends)), ""])
 
     if result.sentiment_controversy:
         lines.extend(["<b>여론 동향 및 논란</b>", _escape_html(_format_list_content(result.sentiment_controversy)), ""])
@@ -401,7 +401,7 @@ def render_ai_analysis_html_rich(result: AIAnalysisResult) -> str:
         content_html = _escape_html(content).replace("\n", "<br>")
         ai_html += f"""
                     <div class="ai-block">
-                        <div class="ai-block-title">核心热点态势</div>
+                        <div class="ai-block-title">핵심 트렌드 동향</div>
                         <div class="ai-block-content">{content_html}</div>
                     </div>"""
 

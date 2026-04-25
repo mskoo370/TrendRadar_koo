@@ -94,7 +94,7 @@ def send_to_feishu(
     standalone_data: Optional[Dict] = None,
 ) -> bool:
     """
-    发送到飞书（支持分批发送，支持热榜+RSS合并+独立展示区）
+    发送到飞书（支持分批发送，支持热榜+RSS合并+독립 쇼케이스）
 
     Args:
         webhook_url: 飞书 Webhook URL
@@ -107,9 +107,9 @@ def send_to_feishu(
         batch_size: 批次大小（字节）
         batch_interval: 批次发送间隔（秒）
         split_content_func: 内容分批函数
-        get_time_func: 获取当前时间的函数
-        rss_items: RSS 统计条目列表（可选，用于合并推送）
-        rss_new_items: RSS 新增条目列表（可选，用于新增区块）
+        get_time_func: 获取현재时间的函数
+        rss_items: RSS 统计개目列表（可选，用于合并推送）
+        rss_new_items: RSS 新增개目列表（可选，用于新增区块）
 
     Returns:
         bool: 发送是否成功
@@ -239,7 +239,7 @@ def send_to_dingtalk(
     standalone_data: Optional[Dict] = None,
 ) -> bool:
     """
-    发送到钉钉（支持分批发送，支持热榜+RSS合并+独立展示区）
+    发送到钉钉（支持分批发送，支持热榜+RSS合并+독립 쇼케이스）
 
     Args:
         webhook_url: 钉钉 Webhook URL
@@ -252,8 +252,8 @@ def send_to_dingtalk(
         batch_size: 批次大小（字节）
         batch_interval: 批次发送间隔（秒）
         split_content_func: 内容分批函数
-        rss_items: RSS 统计条目列表（可选，用于合并推送）
-        rss_new_items: RSS 新增条目列表（可选，用于新增区块）
+        rss_items: RSS 统计개目列表（可选，用于合并推送）
+        rss_new_items: RSS 新增개目列表（可选，用于新增区块）
 
     Returns:
         bool: 发送是否成功
@@ -368,7 +368,7 @@ def send_to_wework(
     standalone_data: Optional[Dict] = None,
 ) -> bool:
     """
-    发送到企业微信（支持分批发送，支持 markdown 和 text 两种格式，支持热榜+RSS合并+独立展示区）
+    发送到企业微信（支持分批发送，支持 markdown 和 text 两种格式，支持热榜+RSS合并+독립 쇼케이스）
 
     Args:
         webhook_url: 企业微信 Webhook URL
@@ -382,8 +382,8 @@ def send_to_wework(
         batch_interval: 批次发送间隔（秒）
         msg_type: 消息类型 (markdown/text)
         split_content_func: 内容分批函数
-        rss_items: RSS 统计条目列表（可选，用于合并推送）
-        rss_new_items: RSS 新增条目列表（可选，用于新增区块）
+        rss_items: RSS 统计개目列表（可选，用于合并推送）
+        rss_new_items: RSS 新增개目列表（可选，用于新增区块）
 
     Returns:
         bool: 发送是否成功
@@ -507,7 +507,7 @@ def send_to_telegram(
     standalone_data: Optional[Dict] = None,
 ) -> bool:
     """
-    发送到 Telegram（支持分批发送，支持热榜+RSS合并+独立展示区）
+    发送到 Telegram（支持分批发送，支持热榜+RSS合并+독립 쇼케이스）
 
     Args:
         bot_token: Telegram Bot Token
@@ -521,8 +521,8 @@ def send_to_telegram(
         batch_size: 批次大小（字节）
         batch_interval: 批次发送间隔（秒）
         split_content_func: 内容分批函数
-        rss_items: RSS 统计条目列表（可选，用于合并推送）
-        rss_new_items: RSS 新增条目列表（可选，用于新增区块）
+        rss_items: RSS 统计개目列表（可选，用于合并推送）
+        rss_new_items: RSS 新增개目列表（可选，用于新增区块）
 
     Returns:
         bool: 发送是否成功
@@ -639,7 +639,7 @@ def send_to_email(
         html_file_path: HTML 报告文件路径
         custom_smtp_server: 自定义 SMTP 服务器（可选）
         custom_smtp_port: 自定义 SMTP 端口（可选）
-        get_time_func: 获取当前时间的函数
+        get_time_func: 获取현재时间的函数
 
     Returns:
         bool: 发送是否成功
@@ -709,8 +709,8 @@ def send_to_email(
         text_content = f"""
 TrendRadar 热点分析报告
 ========================
-报告类型：{report_type}
-生成时间：{now.strftime('%Y-%m-%d %H:%M:%S')}
+报告유형：{report_type}
+生成시간：{now.strftime('%Y-%m-%d %H:%M:%S')}
 
 请使用支持HTML的邮件客户端查看完整报告内容。
         """
@@ -796,7 +796,7 @@ def send_to_ntfy(
     standalone_data: Optional[Dict] = None,
 ) -> bool:
     """
-    发送到 ntfy（支持分批发送，严格遵守4KB限制，支持热榜+RSS合并+独立展示区）
+    发送到 ntfy（支持分批发送，严格遵守4KB限制，支持热榜+RSS合并+독립 쇼케이스）
 
     Args:
         server_url: ntfy 服务器 URL
@@ -810,8 +810,8 @@ def send_to_ntfy(
         account_label: 账号标签（多账号时显示）
         batch_size: 批次大小（字节）
         split_content_func: 内容分批函数
-        rss_items: RSS 统计条目列表（可选，用于合并推送）
-        rss_new_items: RSS 新增条目列表（可选，用于新增区块）
+        rss_items: RSS 统计개目列表（可选，用于合并推送）
+        rss_new_items: RSS 新增개目列表（可选，用于新增区块）
 
     Returns:
         bool: 发送是否成功
@@ -998,7 +998,7 @@ def send_to_bark(
     standalone_data: Optional[Dict] = None,
 ) -> bool:
     """
-    发送到 Bark（支持分批发送，使用 markdown 格式，支持热榜+RSS合并+独立展示区）
+    发送到 Bark（支持分批发送，使用 markdown 格式，支持热榜+RSS合并+독립 쇼케이스）
 
     Args:
         bark_url: Bark URL（包含 device_key）
@@ -1011,8 +1011,8 @@ def send_to_bark(
         batch_size: 批次大小（字节）
         batch_interval: 批次发送间隔（秒）
         split_content_func: 内容分批函数
-        rss_items: RSS 统计条目列表（可选，用于合并推送）
-        rss_new_items: RSS 新增条目列表（可选，用于新增区块）
+        rss_items: RSS 统计개目列表（可选，用于合并推送）
+        rss_new_items: RSS 新增개目列表（可选，用于新增区块）
 
     Returns:
         bool: 发送是否成功
@@ -1172,7 +1172,7 @@ def send_to_slack(
     standalone_data: Optional[Dict] = None,
 ) -> bool:
     """
-    发送到 Slack（支持分批发送，使用 mrkdwn 格式，支持热榜+RSS合并+独立展示区）
+    发送到 Slack（支持分批发送，使用 mrkdwn 格式，支持热榜+RSS合并+독립 쇼케이스）
 
     Args:
         webhook_url: Slack Webhook URL
@@ -1185,8 +1185,8 @@ def send_to_slack(
         batch_size: 批次大小（字节）
         batch_interval: 批次发送间隔（秒）
         split_content_func: 内容分批函数
-        rss_items: RSS 统计条目列表（可选，用于合并推送）
-        rss_new_items: RSS 新增条目列表（可选，用于新增区块）
+        rss_items: RSS 统计개目列表（可选，用于合并推送）
+        rss_new_items: RSS 新增개目列表（可选，用于新增区块）
 
     Returns:
         bool: 发送是否成功
@@ -1291,7 +1291,7 @@ def send_to_generic_webhook(
     standalone_data: Optional[Dict] = None,
 ) -> bool:
     """
-    发送到通用 Webhook（支持分批发送，支持自定义 JSON 模板，支持热榜+RSS合并+独立展示区）
+    发送到通用 Webhook（支持分批发送，支持自定义 JSON 模板，支持热榜+RSS合并+독립 쇼케이스）
 
     Args:
         webhook_url: Webhook URL
@@ -1305,8 +1305,8 @@ def send_to_generic_webhook(
         batch_size: 批次大小（字节）
         batch_interval: 批次发送间隔（秒）
         split_content_func: 内容分批函数
-        rss_items: RSS 统计条目列表（可选，用于合并推送）
-        rss_new_items: RSS 新增条目列表（可选，用于新增区块）
+        rss_items: RSS 统计개目列表（可选，用于合并推送）
+        rss_new_items: RSS 新增개目列表（可选，用于新增区块）
 
     Returns:
         bool: 发送是否成功

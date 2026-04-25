@@ -13,7 +13,7 @@ def get_batch_header(format_type: str, batch_num: int, total_batches: int) -> st
 
     Args:
         format_type: 推送类型（telegram, slack, wework_text, bark, feishu, dingtalk, ntfy, wework）
-        batch_num: 当前批次编号
+        batch_num: 현재批次编号
         total_batches: 总批次数
 
     Returns:
