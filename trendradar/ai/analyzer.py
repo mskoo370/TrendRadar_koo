@@ -20,8 +20,8 @@ class AIAnalysisResult:
     # 新版 5 核心板块
     core_trends: str = ""                # 核心热点与舆情态势
     sentiment_controversy: str = ""      # 舆论风向与争议
-    signals: str = ""                    # 异动与弱信号
-    rss_insights: str = ""               # RSS 深度洞察
+    signals: str = ""                    # 특이사항 및 약한 신호
+    rss_insights: str = ""               # RSS 심층 인사이트
     outlook_strategy: str = ""           # 研判与策略建议
     standalone_summaries: Dict[str, str] = field(default_factory=dict)  # 独立展示区概括 {源ID: 概括}
 
