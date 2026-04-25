@@ -116,14 +116,32 @@ class AIClient:
             model_variants = list(dict.fromkeys(model_variants))
 
         last_error = None
+        
+        # Gemini 모델인 경우 google-generativeai SDK로 직접 호출 (LiteLLM v1beta 문제 우회)
+        if "gemini" in self.model.lower() and self.api_key:
+            try:
+                import google.generativeai as genai
+                genai.configure(api_key=self.api_key)
+                base_name = self.model.split("/")[-1]
+                gemini_model = genai.GenerativeModel(base_name)
+                # system prompt 처리
+                system_parts = [m["content"] for m in messages if m["role"] == "system"]
+                user_parts = [m["content"] for m in messages if m["role"] != "system"]
+                prompt = "\n".join(system_parts + user_parts)
+                response = gemini_model.generate_content(prompt)
+                print(f"[AI] Google SDK 직접 호출 성공: {base_name}")
+                return response.text or ""
+            except Exception as e:
+                last_error = e
+                print(f"[AI] Google SDK 직접 호출 실패: {str(e)[:120]}...")
+        
+        # LiteLLM fallback
         for variant in model_variants:
             try:
                 current_params = params.copy()
                 current_params["model"] = variant
-                current_params["num_retries"] = 0  # 各模型只尝试一次，不浪费配额
+                current_params["num_retries"] = 0
                 response = completion(**current_params)
-                
-                # 提取响应内容
                 content = response.choices[0].message.content
                 if isinstance(content, list):
                     content = "\n".join(
@@ -135,13 +153,11 @@ class AIClient:
                 last_error = e
                 err_str = str(e)
                 print(f"[AI] 模型 {variant} 调用失败: {err_str[:100]}...")
-                # RateLimitError 인 경우 잠시 대기 후 다음 모델 시도
                 if "RateLimit" in err_str or "rate_limit" in err_str.lower():
                     import time
                     time.sleep(2)
                 continue
         
-        # 如果全部失败
         raise last_error
 
     def validate_config(self) -> tuple[bool, str]:
