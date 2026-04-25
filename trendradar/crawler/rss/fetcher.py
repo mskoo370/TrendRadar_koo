@@ -227,7 +227,7 @@ class RSSFetcher:
                 all_items[feed.id] = items
 
         total_items = sum(len(items) for items in all_items.values())
-        print(f"[RSS] 抓取完成: {len(all_items)} 个源成功, {len(failed_ids)} 个失败, 共 {total_items} 条")
+        print(f"[RSS] 抓取完成: {len(all_items)} 个源成功, {len(failed_ids)} 个失败, 총 {total_items} 条")
 
         return RSSData(
             date=crawl_date,

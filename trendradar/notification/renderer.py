@@ -79,7 +79,7 @@ def render_feishu_content(
     new_titles_content = ""
     if show_new_section and report_data["new_titles"]:
         new_titles_content += (
-            f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 개)\n\n"
+            f"🆕 **本次신규 핫 트렌드新闻** (총 {report_data['total_new_count']} 개)\n\n"
         )
 
         for source_data in report_data["new_titles"]:
@@ -181,7 +181,7 @@ def render_dingtalk_content(
     # 头部信息
     header_content = f"**총 뉴스 수：** {total_titles}\n\n"
     header_content += f"**시간：** {now.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-    header_content += "**유형：** 热点分析报告\n\n"
+    header_content += "**유형：** 트렌드 분석 리포트\n\n"
     header_content += "---\n\n"
 
     # 生成热点词汇统计部分
@@ -220,7 +220,7 @@ def render_dingtalk_content(
     new_titles_content = ""
     if show_new_section and report_data["new_titles"]:
         new_titles_content += (
-            f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 개)\n\n"
+            f"🆕 **本次신규 핫 트렌드新闻** (총 {report_data['total_new_count']} 개)\n\n"
         )
 
         for source_data in report_data["new_titles"]:
@@ -300,7 +300,7 @@ def _render_rss_section_feishu(rss_items: list, separator: str = "---") -> str:
             feeds_map[feed_id] = []
         feeds_map[feed_id].append(item)
 
-    text_content = f"📰 **RSS 订阅更新** (共 {len(rss_items)} 개)\n\n"
+    text_content = f"📰 **RSS 订阅更新** (총 {len(rss_items)} 개)\n\n"
 
     for feed_id, items in feeds_map.items():
         feed_name = items[0].get("feed_name", feed_id) if items else feed_id
@@ -343,7 +343,7 @@ def _render_rss_section_markdown(rss_items: list) -> str:
             feeds_map[feed_id] = []
         feeds_map[feed_id].append(item)
 
-    text_content = f"📰 **RSS 订阅更新** (共 {len(rss_items)} 개)\n\n"
+    text_content = f"📰 **RSS 订阅更新** (총 {len(rss_items)} 개)\n\n"
 
     for feed_id, items in feeds_map.items():
         feed_name = items[0].get("feed_name", feed_id) if items else feed_id

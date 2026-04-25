@@ -1,7 +1,7 @@
 """
 高级数据分析工具
 
-提供热度趋势分析、平台对比、关键词共现、情感分析等高级分析功能。
+提供热度趋势分析、平台对比、关键词총现、情感分析等高级分析功能。
 """
 
 import os
@@ -123,10 +123,10 @@ class AnalyticsTools:
             insight_type: 洞察类型，可选值：
                 - "platform_compare": 平台对比分析（对比不同平台对话题的关注度）
                 - "platform_activity": 平台活跃度统计（统计各平台发布频率和活跃时间）
-                - "keyword_cooccur": 关键词共现分析（分析关键词同时出现的模式）
+                - "keyword_cooccur": 关键词총现分析（分析关键词同时出现的模式）
             topic: 话题关键词（可选，platform_compare模式适用）
             date_range: 日期范围，格式: {"start": "YYYY-MM-DD", "end": "YYYY-MM-DD"}
-            min_frequency: 最小共现频次（keyword_cooccur模式），默认3
+            min_frequency: 最小총现频次（keyword_cooccur模式），默认3
             top_n: 返回TOP N结果（keyword_cooccur模式），默认20
 
         Returns:
@@ -552,14 +552,14 @@ class AnalyticsTools:
         top_n: int = 20
     ) -> Dict:
         """
-        关键词共现分析 - 分析哪些关键词经常同时出现
+        关键词총现分析 - 分析哪些关键词经常同时出现
 
         Args:
-            min_frequency: 最小共现频次
+            min_frequency: 最小총现频次
             top_n: 返回TOP N关键词对
 
         Returns:
-            关键词共现分析结果
+            关键词총现分析结果
 
         Examples:
             用户询问示例：
@@ -583,7 +583,7 @@ class AnalyticsTools:
             # 读取今天的数据
             all_titles, _, _ = self.data_service.parser.read_all_titles_for_date()
 
-            # 关键词共现统计
+            # 关键词총现统计
             cooccurrence = Counter()
             keyword_titles = defaultdict(list)
 
@@ -596,7 +596,7 @@ class AnalyticsTools:
                     for kw in keywords:
                         keyword_titles[kw].append(title)
 
-                    # 计算两两共现
+                    # 计算两两총现
                     if len(keywords) >= 2:
                         for i, kw1 in enumerate(keywords):
                             for kw2 in keywords[i+1:]:
@@ -604,7 +604,7 @@ class AnalyticsTools:
                                 pair = tuple(sorted([kw1, kw2]))
                                 cooccurrence[pair] += 1
 
-            # 过滤低频共现
+            # 过滤低频총现
             filtered_pairs = [
                 (pair, count) for pair, count in cooccurrence.items()
                 if count >= min_frequency
@@ -632,7 +632,7 @@ class AnalyticsTools:
             return {
                 "success": True,
                 "summary": {
-                    "description": "关键词共现分析结果",
+                    "description": "关键词총现分析结果",
                     "total": len(result_pairs),
                     "min_frequency": min_frequency,
                     "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")

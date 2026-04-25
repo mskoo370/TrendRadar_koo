@@ -747,7 +747,7 @@ class RemoteStorageBackend(SQLiteStorageMixin, StorageBackend):
                 for date_str in sorted(deleted_dates):
                     print(f"[远程存储] 清理过期数据: news/{date_str}.db")
 
-                print(f"[远程存储] 共清理 {deleted_count} 个过期日期数据库文件")
+                print(f"[远程存储] 총清理 {deleted_count} 个过期日期数据库文件")
 
             return deleted_count
 
@@ -825,7 +825,7 @@ class RemoteStorageBackend(SQLiteStorageMixin, StorageBackend):
             except Exception as e:
                 print(f"[远程存储] 拉取失败 ({date_str}): {e}")
 
-        print(f"[远程存储] 拉取完成，共下载 {pulled_count} 个数据库文件")
+        print(f"[远程存储] 拉取完成，총下载 {pulled_count} 个数据库文件")
         return pulled_count
 
     def list_remote_dates(self) -> List[str]:

@@ -181,7 +181,7 @@ class NotificationDispatcher:
             print("[翻译] 没有需要翻译的内容")
             return report_data, rss_items, rss_new_items, standalone_data
 
-        print(f"[翻译] 共 {len(titles_to_translate)} 개标题待翻译")
+        print(f"[翻译] 총 {len(titles_to_translate)} 개标题待翻译")
 
         # 批量翻译
         result = self.translator.translate_batch(titles_to_translate)

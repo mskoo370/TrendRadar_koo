@@ -83,7 +83,7 @@ def render_ai_analysis_markdown(result: AIAnalysisResult) -> str:
             return f"ℹ️ {result.error}"
         return f"⚠️ AI 分析失败: {result.error}"
 
-    lines = ["**✨ AI 热点分析**", ""]
+    lines = ["**✨ AI 핫 트렌드 분석**", ""]
 
     if result.core_trends:
         lines.extend(["**핵심 트렌드 동향**", _format_list_content(result.core_trends), ""])
@@ -121,7 +121,7 @@ def render_ai_analysis_feishu(result: AIAnalysisResult) -> str:
             return f"ℹ️ {result.error}"
         return f"⚠️ AI 分析失败: {result.error}"
 
-    lines = ["**✨ AI 热点分析**", ""]
+    lines = ["**✨ AI 핫 트렌드 분석**", ""]
 
     if result.core_trends:
         lines.extend(["**핵심 트렌드 동향**", _format_list_content(result.core_trends), ""])
@@ -159,7 +159,7 @@ def render_ai_analysis_dingtalk(result: AIAnalysisResult) -> str:
             return f"ℹ️ {result.error}"
         return f"⚠️ AI 分析失败: {result.error}"
 
-    lines = ["### ✨ AI 热点分析", ""]
+    lines = ["### ✨ AI 핫 트렌드 분석", ""]
 
     if result.core_trends:
         lines.extend(
@@ -205,7 +205,7 @@ def render_ai_analysis_html(result: AIAnalysisResult) -> str:
             f'<div class="ai-error">⚠️ AI 分析失败: {_escape_html(result.error)}</div>'
         )
 
-    html_parts = ['<div class="ai-analysis">', "<h3>✨ AI 热点分析</h3>"]
+    html_parts = ['<div class="ai-analysis">', "<h3>✨ AI 핫 트렌드 분석</h3>"]
 
     if result.core_trends:
         content = _format_list_content(result.core_trends)
@@ -291,7 +291,7 @@ def render_ai_analysis_plain(result: AIAnalysisResult) -> str:
             return result.error
         return f"AI 分析失败: {result.error}"
 
-    lines = ["【✨ AI 热点分析】", ""]
+    lines = ["【✨ AI 핫 트렌드 분석】", ""]
 
     if result.core_trends:
         lines.extend(["[핵심 트렌드 동향]", _format_list_content(result.core_trends), ""])
@@ -330,7 +330,7 @@ def render_ai_analysis_telegram(result: AIAnalysisResult) -> str:
             return f"ℹ️ {_escape_html(result.error)}"
         return f"⚠️ AI 分析失败: {_escape_html(result.error)}"
 
-    lines = ["<b>✨ AI 热点分析</b>", ""]
+    lines = ["<b>✨ AI 핫 트렌드 분석</b>", ""]
 
     if result.core_trends:
         lines.extend(["<b>핵심 트렌드 동향</b>", _escape_html(_format_list_content(result.core_trends)), ""])
@@ -391,7 +391,7 @@ def render_ai_analysis_html_rich(result: AIAnalysisResult) -> str:
     ai_html = """
                 <div class="ai-section">
                     <div class="ai-section-header">
-                        <div class="ai-section-title">✨ AI 热点分析</div>
+                        <div class="ai-section-title">✨ AI 핫 트렌드 분석</div>
                         <span class="ai-section-badge">AI</span>
                     </div>
                     <div class="ai-blocks-grid">"""

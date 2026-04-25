@@ -1030,7 +1030,7 @@ class NotificationTools:
         else:
             return {
                 "success": True,
-                "summary": f"共 {len(CHANNEL_FORMAT_GUIDES)} 个渠道的格式化策略",
+                "summary": f"총 {len(CHANNEL_FORMAT_GUIDES)} 个渠道的格式化策略",
                 "guides": CHANNEL_FORMAT_GUIDES,
             }
 
@@ -1390,7 +1390,7 @@ class NotificationTools:
             tk = tokens[i].strip() if i < len(tokens) else ""
             if not (srv and topic):
                 continue
-            # ntfy.sh 公共服务器用 2s 间隔（与 trendradar 一致）
+            # ntfy.sh 公총服务器用 2s 间隔（与 trendradar 一致）
             interval = 2.0 if "ntfy.sh" in srv else batch_interval
             for j, batch in enumerate(batches):
                 r = _send_ntfy(srv, topic, batch, title, tk)

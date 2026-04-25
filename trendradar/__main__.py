@@ -1426,7 +1426,7 @@ class NewsAnalyzer:
             print(f"[RSS] 新鲜度过滤：跳过 {filtered_count} 篇超过指定天数的旧文章（仍保留在数据库中）")
             # DEBUG 模式下显示详细信息
             if debug_mode and filtered_details:
-                print(f"[RSS] 被过滤的文章详情（共 {len(filtered_details)} 篇）：")
+                print(f"[RSS] 被过滤的文章详情（총 {len(filtered_details)} 篇）：")
                 for detail in filtered_details[:10]:  # 最多显示 10 条
                     days_str = f"{detail['days_old']:.1f}" if detail['days_old'] else "未知"
                     print(f"  - [{days_str}天前] [{detail['feed']}] {detail['title']} (限制: {detail['max_days']}天)")

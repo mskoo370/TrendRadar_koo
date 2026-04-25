@@ -1457,7 +1457,7 @@ def render_html_content(
     if show_new_section and report_data["new_titles"]:
         new_titles_html += f"""
                 <div class="new-section">
-                    <div class="new-section-title">本次新增热点 (共 {report_data['total_new_count']} 条)</div>
+                    <div class="new-section-title">本次新增热点 (총 {report_data['total_new_count']} 条)</div>
                     <div class="new-sources-grid">"""
 
         for source_data in report_data["new_titles"]:

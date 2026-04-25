@@ -481,7 +481,7 @@ class LocalStorageBackend(SQLiteStorageMixin, StorageBackend):
                             print(f"[本地存储] 删除目录失败 {date_folder}: {e}")
 
             if deleted_count > 0:
-                print(f"[本地存储] 共清理 {deleted_count} 个过期文件/目录")
+                print(f"[本地存储] 총清理 {deleted_count} 个过期文件/目录")
 
             return deleted_count
 

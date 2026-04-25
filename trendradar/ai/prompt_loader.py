@@ -3,7 +3,7 @@
 提示词模板加载工具
 
 从配置目录中加载 [system] / [user] 格式的提示词文件，
-供 analyzer、translator、filter 等模块共享使用。
+供 analyzer、translator、filter 等模块총享使用。
 """
 
 from pathlib import Path

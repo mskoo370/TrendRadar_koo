@@ -2,7 +2,7 @@
 """
 SQLite 存储 Mixin
 
-提供共用的 SQLite 数据库操作逻辑，供 LocalStorageBackend 和 RemoteStorageBackend 复用。
+提供총用的 SQLite 数据库操作逻辑，供 LocalStorageBackend 和 RemoteStorageBackend 复用。
 """
 
 import sqlite3

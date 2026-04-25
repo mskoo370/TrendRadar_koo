@@ -313,7 +313,7 @@ def send_to_dingtalk(
         payload = {
             "msgtype": "markdown",
             "markdown": {
-                "title": f"TrendRadar 热点分析报告 - {report_type}",
+                "title": f"TrendRadar 트렌드 분석 리포트 - {report_type}",
                 "text": batch_content,
             },
         }
@@ -697,7 +697,7 @@ def send_to_email(
 
         # 设置邮件主题
         now = get_time_func() if get_time_func else datetime.now()
-        subject = f"TrendRadar 热点分析报告 - {report_type} - {now.strftime('%m月%d日 %H:%M')}"
+        subject = f"TrendRadar 트렌드 분석 리포트 - {report_type} - {now.strftime('%m月%d日 %H:%M')}"
         msg["Subject"] = Header(subject, "utf-8")
 
         # 设置其他标准 header
@@ -707,7 +707,7 @@ def send_to_email(
 
         # 添加纯文本部分（作为备选）
         text_content = f"""
-TrendRadar 热点分析报告
+TrendRadar 트렌드 분석 리포트
 ========================
 报告유형：{report_type}
 生成시간：{now.strftime('%Y-%m-%d %H:%M:%S')}
@@ -922,7 +922,7 @@ def send_to_ntfy(
                 print(f"{log_prefix}第 {actual_batch_num}/{total_batches} 批次发送成功 [{report_type}]")
                 success_count += 1
                 if idx < total_batches:
-                    # 公共服务器建议 2-3 秒，自托管可以更短
+                    # 公총服务器建议 2-3 秒，自托管可以更短
                     interval = 2 if "ntfy.sh" in server_url else 1
                     time.sleep(interval)
             elif response.status_code == 429:

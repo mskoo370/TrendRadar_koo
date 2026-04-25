@@ -451,13 +451,13 @@ async def analyze_data_insights(
         insight_type: 洞察类型，可选值：
             - "platform_compare": 平台对比分析（对比不同平台对话题的关注度）
             - "platform_activity": 平台活跃度统计（统计各平台发布频率和活跃时间）
-            - "keyword_cooccur": 关键词共现分析（分析关键词同时出现的模式）
+            - "keyword_cooccur": 关键词총现分析（分析关键词同时出现的模式）
         topic: 话题关键词（可选，platform_compare模式适用）
         date_range: **【对象类型】** 日期范围（可选）
                     - **格式**: {"start": "YYYY-MM-DD", "end": "YYYY-MM-DD"}
                     - **示例**: {"start": "2025-01-01", "end": "2025-01-07"}
                     - **重要**: 必须是对象格式，不能传递整数
-        min_frequency: 最小共现频次（keyword_cooccur模式），默认3
+        min_frequency: 最小총现频次（keyword_cooccur模式），默认3
         top_n: 返回TOP N结果（keyword_cooccur模式），默认20
 
     Returns:
@@ -1172,7 +1172,7 @@ def run_server(
     print()
     print("    === 高级数据分析 ===")
     print("    9. analyze_topic_trend      - 统一话题趋势分析（热度/生命周期/爆火/预测）")
-    print("    10. analyze_data_insights   - 统一数据洞察分析（平台对比/活跃度/关键词共现）")
+    print("    10. analyze_data_insights   - 统一数据洞察分析（平台对比/活跃度/关键词총现）")
     print("    11. analyze_sentiment       - 情感倾向分析")
     print("    12. aggregate_news          - 跨平台新闻聚合去重")
     print("    13. compare_periods         - 时期对比分析（周环比/月环比）")
