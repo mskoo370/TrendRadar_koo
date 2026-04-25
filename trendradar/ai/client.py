@@ -105,11 +105,11 @@ class AIClient:
         if "groq" in self.model.lower():
             model_variants = [
                 self.model,
-                "groq/llama-3.1-8b-instant",
-                "groq/llama3-8b-8192",
                 "groq/llama-3.3-70b-versatile",
                 "groq/llama3-70b-8192",
                 "groq/mixtral-8x7b-32768",
+                "groq/llama-3.1-8b-instant",
+                "groq/llama3-8b-8192",
             ]
             model_variants = list(dict.fromkeys(model_variants))
 

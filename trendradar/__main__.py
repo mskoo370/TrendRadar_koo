@@ -201,9 +201,9 @@ class NewsAnalyzer:
             "should_send_notification": True,
         },
         "current": {
-            "mode_name": "当前榜单模式",
-            "description": "当前榜单模式（当前榜单匹配新闻 + 新增新闻区域 + 按时推送）",
-            "report_type": "当前榜单",
+            "mode_name": "현재 랭킹模式",
+            "description": "현재 랭킹模式（현재 랭킹匹配新闻 + 新增新闻区域 + 按时推送）",
+            "report_type": "현재 랭킹",
             "should_send_notification": True,
         },
         "daily": {
@@ -534,7 +534,7 @@ class NewsAnalyzer:
                 # 根据 AI 模式确定报告类型
                 ai_report_type = {
                     "daily": "当日汇总",
-                    "current": "当前榜单",
+                    "current": "현재 랭킹",
                     "incremental": "增量更新"
                 }.get(ai_mode, report_type)
             else:
@@ -1197,7 +1197,7 @@ class NewsAnalyzer:
 
         三种模式：
         - daily: 当日汇总，统计=当天所有条目，新增=本次新增条目
-        - current: 当前榜单，统计=当前榜单条目，新增=本次新增条目
+        - current: 현재 랭킹，统计=현재 랭킹条目，新增=本次新增条目
         - incremental: 增量模式，统计=新增条目，新增=无
 
         Args:
@@ -1284,10 +1284,10 @@ class NewsAnalyzer:
                 return None, None, raw_rss_items, rss_new_urls
 
         elif self.report_mode == "current":
-            # 当前榜单模式：统计=当前榜单所有条目
+            # 현재 랭킹模式：统计=현재 랭킹所有条目
             # raw_rss_items 已在前面获取
             if not raw_rss_items:
-                print("[RSS] 当前榜单模式：没有 RSS 数据")
+                print("[RSS] 현재 랭킹模式：没有 RSS 数据")
                 return None, None, None, rss_new_urls
 
             rss_stats, total = count_rss_frequency(
@@ -1303,7 +1303,7 @@ class NewsAnalyzer:
                 quiet=False,
             )
             if not rss_stats:
-                print("[RSS] 当前榜单模式：关键词匹配后没有内容")
+                print("[RSS] 현재 랭킹模式：关键词匹配后没有内容")
                 # 即使关键词匹配为空，也返回原始条目用于独立展示区
                 return None, None, raw_rss_items, rss_new_urls
 

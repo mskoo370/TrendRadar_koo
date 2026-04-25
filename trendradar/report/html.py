@@ -1265,7 +1265,7 @@ def render_html_content(
 
     # 处理报告类型显示（根据 mode 直接显示）
     if mode == "current":
-        html += "当前榜单"
+        html += "현재 랭킹"
     elif mode == "incremental":
         html += "增量分析"
     else:

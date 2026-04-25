@@ -25,7 +25,7 @@ def _split_content_by_lines(
 
     Args:
         content: 正文内容（不含 footer，可能含 base_header）
-        footer: 尾部内容（更新时间等）
+        footer: 尾部内容（업데이트 시간等）
         max_bytes: 单批次最大字节数
         base_header: 后续批次的头部
 
@@ -60,7 +60,7 @@ def _safe_append_batch(
     Args:
         batches: 批次列表（原地修改）
         content: 正文内容（不含 footer）
-        footer: 尾部内容（更新时间等）
+        footer: 尾部内容（업데이트 시간等）
         max_bytes: 最大字节数
         base_header: 溢出时后续批次的头部
     """

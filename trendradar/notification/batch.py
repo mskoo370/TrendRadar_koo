@@ -93,9 +93,9 @@ def truncate_at_line_boundary(text: str, max_bytes: int) -> str:
 
 
 def truncate_preserving_footer(content: str, max_bytes: int) -> str:
-    """截断内容，优先保留尾部 footer（更新时间等），正文在行边界处截断
+    """截断内容，优先保留尾部 footer（업데이트 시간等），正文在行边界处截断
 
-    识别内容末尾的 footer 区域（更新时间、版本提示等），
+    识别内容末尾的 footer 区域（업데이트 시간、版本提示等），
     对 footer 之前的正文部分在行边界处截断，再拼接完整 footer。
 
     Args:
@@ -109,7 +109,7 @@ def truncate_preserving_footer(content: str, max_bytes: int) -> str:
         return content
 
     # 各平台 footer 的常见开头模式
-    footer_markers = ["\n\n\n> ", "\n\n> ", "\n\n<font", "\n\n_", "\n\n更新时间"]
+    footer_markers = ["\n\n\n> ", "\n\n> ", "\n\n<font", "\n\n_", "\n\n업데이트 시간"]
     footer_start = -1
     for marker in footer_markers:
         pos = content.rfind(marker)
@@ -142,7 +142,7 @@ def _split_oversized_batch(content: str, max_content_bytes: int) -> List[str]:
         拆分后的子批次列表
     """
     # 识别 footer
-    footer_markers = ["\n\n\n> ", "\n\n> ", "\n\n<font", "\n\n_", "\n\n更新时间"]
+    footer_markers = ["\n\n\n> ", "\n\n> ", "\n\n<font", "\n\n_", "\n\n업데이트 시간"]
     footer = ""
     body = content
     for marker in footer_markers:

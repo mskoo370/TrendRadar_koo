@@ -257,7 +257,7 @@ class NewsData:
                     merged_ranks = sorted(existing_ranks | new_ranks)
                     existing.ranks = merged_ranks
 
-                    # 更新时间
+                    # 업데이트 시간
                     if item.first_time and (not existing.first_time or item.first_time < existing.first_time):
                         existing.first_time = item.first_time
                     if item.last_time and (not existing.last_time or item.last_time > existing.last_time):

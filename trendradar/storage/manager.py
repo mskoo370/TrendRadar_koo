@@ -211,7 +211,7 @@ class StorageManager:
         return self.get_backend().get_rss_data(date)
 
     def get_latest_rss_data(self, date: Optional[str] = None) -> Optional[RSSData]:
-        """获取最新一次抓取的 RSS 数据（当前榜单模式）"""
+        """获取最新一次抓取的 RSS 数据（현재 랭킹模式）"""
         return self.get_backend().get_latest_rss_data(date)
 
     def detect_new_rss_items(self, current_data: RSSData) -> dict:

@@ -1072,7 +1072,7 @@ class SQLiteStorageMixin:
 
     def _get_latest_rss_data_impl(self, date: Optional[str] = None) -> Optional[RSSData]:
         """
-        获取最新一次抓取的 RSS 数据（当前榜单模式）
+        获取最新一次抓取的 RSS 数据（현재 랭킹模式）
 
         Args:
             date: 日期字符串（YYYY-MM-DD），默认为今天
