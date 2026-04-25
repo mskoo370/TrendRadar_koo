@@ -859,7 +859,7 @@ class NewsAnalyzer:
         # AI 分析（如果启用，用于 HTML 报告）
         ai_result = None
         ai_config = self.ctx.config.get("AI_ANALYSIS", {})
-        if ai_config.get("ENABLED", False) and (stats or rss_items):
+        if ai_config.get("ENABLED", ai_config.get("enabled", False)) and (stats or rss_items):
             # 获取模式策略来确定报告类型
             mode_strategy = self._get_mode_strategy()
             report_type = mode_strategy["report_type"]
@@ -873,7 +873,7 @@ class NewsAnalyzer:
         # 注意：仅翻译 rss_items 和 rss_new_items，不翻译 standalone_data（通知前会重新生成）
         # 热榜翻译在推送时由 dispatch_all 处理 report_data
         trans_config = self.ctx.config.get("AI_TRANSLATION", {})
-        if trans_config.get("ENABLED", False):
+        if trans_config.get("ENABLED", trans_config.get("enabled", False)):
             dispatcher = self.ctx.create_notification_dispatcher()
             display_regions = self.ctx.config.get("DISPLAY", {}).get("REGIONS", {})
             print(f"[翻译][DEBUG] Pipeline: rss_items count: {len(rss_items) if rss_items else 0}")
@@ -997,7 +997,7 @@ class NewsAnalyzer:
                 rss_new_items=rss_new_items,
                 ai_analysis=ai_result,
                 standalone_data=standalone_data,
-                skip_translation=True,
+                skip_translation=False,
             )
 
             if not results:
