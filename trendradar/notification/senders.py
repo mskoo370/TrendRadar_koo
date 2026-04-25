@@ -576,6 +576,9 @@ def send_to_telegram(
         print(
             f"发送{log_prefix}第 {i}/{len(batches)} 批次，大小：{content_size} 字节 [{report_type}]"
         )
+        print("========== TELEGRAM MESSAGE PAYLOAD START ==========")
+        print(batch_content)
+        print("========== TELEGRAM MESSAGE PAYLOAD END ==========")
 
         payload = {
             "chat_id": chat_id,
