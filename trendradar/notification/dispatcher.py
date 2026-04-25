@@ -139,9 +139,16 @@ class NotificationDispatcher:
                 if is_grouped:
                     # 结构化格式
                     for stat_idx, stat in enumerate(rss_items):
-                        for title_idx, title_data in enumerate(stat.get("titles", [])):
-                            titles_to_translate.append(title_data.get("title", ""))
-                            title_locations.append(("rss_items", stat_idx, title_idx))
+                        word = stat.get("word", "")
+                        titles = stat.get("titles", [])
+                        print(f"[翻译][DEBUG] Processing group: {word}, titles count: {len(titles)}")
+                        for title_idx, title_data in enumerate(titles):
+                            title_text = title_data.get("title", "")
+                            if title_text:
+                                titles_to_translate.append(title_text)
+                                title_locations.append(("rss_items", stat_idx, title_idx))
+                            else:
+                                print(f"[翻译][DEBUG] Skipping empty title in group {word}")
             else:
                 # 扁平格式
                 for title_idx, title_data in enumerate(rss_items):
