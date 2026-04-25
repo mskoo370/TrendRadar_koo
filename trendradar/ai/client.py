@@ -95,16 +95,19 @@ class AIClient:
         # 调用 LiteLLM (带自动重试和模型名容错)
         model_variants = [self.model]
         if "gemini" in self.model.lower():
-            # 针对 Gemini 的各种别名尝试
-            base_name = self.model.split("/")[-1]
-            model_variants.extend([
-                f"gemini/{base_name}",
-                f"google_genai/{base_name}",
-                f"gemini/v1/{base_name}",
+            # 按优先级尝试各种 Gemini 模型名
+            model_variants = [
+                "gemini/gemini-2.0-flash",
+                "gemini/gemini-2.0-flash-exp",
                 "gemini/gemini-1.5-flash",
-                "gemini/gemini-pro"
-            ])
-            # 去重并保持顺序
+                "gemini/gemini-1.5-flash-latest",
+                "gemini/gemini-1.5-pro",
+                "gemini/gemini-pro",
+            ]
+            # 优先尝试配置的模型
+            if self.model not in model_variants:
+                model_variants.insert(0, self.model)
+            # 去重保持顺序
             model_variants = list(dict.fromkeys(model_variants))
 
         last_error = None
