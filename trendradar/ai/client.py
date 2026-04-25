@@ -88,18 +88,44 @@ class AIClient:
             if key not in params:
                 params[key] = value
 
-        # 调用 LiteLLM
-        response = completion(**params)
+        # 调用 LiteLLM (带自动重试和模型名容错)
+        model_variants = [self.model]
+        if "gemini" in self.model.lower():
+            # 针对 Gemini 的各种别名尝试
+            base_name = self.model.split("/")[-1]
+            model_variants.extend([
+                f"gemini/{base_name}",
+                f"google_genai/{base_name}",
+                f"gemini/v1/{base_name}",
+                "gemini/gemini-1.5-flash",
+                "gemini/gemini-pro"
+            ])
+            # 去重并保持顺序
+            model_variants = list(dict.fromkeys(model_variants))
 
-        # 提取响应内容
-        # 某些模型/提供商返回 list（内容块）而非 str，统一转为 str
-        content = response.choices[0].message.content
-        if isinstance(content, list):
-            content = "\n".join(
-                item.get("text", str(item)) if isinstance(item, dict) else str(item)
-                for item in content
-            )
-        return content or ""
+        last_error = None
+        for variant in model_variants:
+            try:
+                current_params = params.copy()
+                current_params["model"] = variant
+                print(f"[AI] 尝试调用模型: {variant}")
+                response = completion(**current_params)
+                
+                # 提取响应内容
+                content = response.choices[0].message.content
+                if isinstance(content, list):
+                    content = "\n".join(
+                        item.get("text", str(item)) if isinstance(item, dict) else str(item)
+                        for item in content
+                    )
+                return content or ""
+            except Exception as e:
+                last_error = e
+                print(f"[AI] 模型 {variant} 调用失败: {str(e)[:100]}...")
+                continue
+        
+        # 如果全部失败
+        raise last_error
 
     def validate_config(self) -> tuple[bool, str]:
         """
