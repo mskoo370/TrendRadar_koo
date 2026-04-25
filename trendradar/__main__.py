@@ -1580,8 +1580,10 @@ class NewsAnalyzer:
                 title_info = historical_title_info
                 results = all_results
             else:
-                print("❌ 严重错误：无法读取刚保存的数据文件")
-                raise RuntimeError("数据一致性检查失败：保存后立即读取失败")
+                print("⚠️ 提醒：未发现今日平台数据，将仅处理 RSS。")
+                results, title_info, id_to_name, new_titles = {}, {}, {}, {}
+                stats = []
+                html_file, ai_result = None, None
         elif self.report_mode == "daily":
             # daily 模式：使用全天累计数据
             analysis_data = self._load_analysis_data()
@@ -1707,16 +1709,11 @@ class NewsAnalyzer:
         """执行分析流程"""
         try:
             self._initialize_and_check_config()
-            if not self.ctx.config.get("ENABLE_CRAWLER", True) and not self.ctx.rss_enabled:
-                return
 
             mode_strategy = self._get_mode_strategy()
 
             # 抓取热榜数据
-            if self.ctx.config.get("ENABLE_CRAWLER", True):
-                results, id_to_name, failed_ids = self._crawl_data()
-            else:
-                results, id_to_name, failed_ids = {}, {}, []
+            results, id_to_name, failed_ids = self._crawl_data()
 
             # 抓取 RSS 数据（如果启用），返回统计条目、新增条目和原始条目
             rss_items, rss_new_items, raw_rss_items, rss_new_urls = self._crawl_rss_data()
