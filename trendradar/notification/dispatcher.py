@@ -131,28 +131,20 @@ class NotificationDispatcher:
         # 3. RSS 统计标题
         show_rss = display_regions.get("RSS", display_regions.get("rss", True))
         can_translate_rss = scope.get("RSS", scope.get("rss", True))
-        print(f"[翻译][DEBUG] RSS check: skip_rss={skip_rss}, has_items={bool(rss_items)}, can_translate={can_translate_rss}, show_rss={show_rss}")
         
         # 即使 skip_rss 为 True，只要 rss_items 有内容且启用了显示/翻译，就尝试翻译
         if (not skip_rss or rss_items) and can_translate_rss and show_rss:
-            if rss_items:
-                print(f"[翻译][DEBUG] RSS items count: {len(rss_items)}")
             if isinstance(rss_items, list) and len(rss_items) > 0:
                 is_grouped = "titles" in rss_items[0]
-                print(f"[翻译][DEBUG] Is RSS grouped: {is_grouped}")
                 if is_grouped:
                     # 结构化格式
                     for stat_idx, stat in enumerate(rss_items):
-                        word = stat.get("word", "")
                         titles = stat.get("titles", [])
-                        print(f"[翻译][DEBUG] Processing group: {word}, titles count: {len(titles)}")
                         for title_idx, title_data in enumerate(titles):
                             title_text = title_data.get("title", "")
                             if title_text:
                                 titles_to_translate.append(title_text)
                                 title_locations.append(("rss_items", stat_idx, title_idx))
-                            else:
-                                print(f"[翻译][DEBUG] Skipping empty title in group {word}")
             else:
                 # 扁平格式
                 for title_idx, title_data in enumerate(rss_items):

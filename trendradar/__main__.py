@@ -876,7 +876,6 @@ class NewsAnalyzer:
         if trans_config.get("ENABLED", trans_config.get("enabled", False)):
             dispatcher = self.ctx.create_notification_dispatcher()
             display_regions = self.ctx.config.get("DISPLAY", {}).get("REGIONS", {})
-            print(f"[翻译][DEBUG] Pipeline: rss_items count: {len(rss_items) if rss_items else 0}")
             _, translated_rss, translated_new_rss, _ = \
                 dispatcher.translate_content(
                     report_data={"stats": [], "new_titles": []},
