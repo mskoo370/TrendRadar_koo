@@ -97,8 +97,8 @@ class AIClient:
         if "gemini" in self.model.lower():
             # 按优先级尝试各种 Gemini 模型名
             model_variants = [
+                "gemini/gemini-2.0-flash-lite",
                 "gemini/gemini-2.0-flash",
-                "gemini/gemini-2.0-flash-exp",
                 "gemini/gemini-1.5-flash",
                 "gemini/gemini-1.5-flash-latest",
                 "gemini/gemini-1.5-pro",
