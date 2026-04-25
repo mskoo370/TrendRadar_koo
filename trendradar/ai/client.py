@@ -117,27 +117,32 @@ class AIClient:
         
         # LiteLLM fallback
         for variant in model_variants:
-            try:
-                current_params = params.copy()
-                current_params["model"] = variant
-                current_params["num_retries"] = 0
-                response = completion(**current_params)
-                content = response.choices[0].message.content
-                if isinstance(content, list):
-                    content = "\n".join(
-                        item.get("text", str(item)) if isinstance(item, dict) else str(item)
-                        for item in content
-                    )
-                return content or ""
-            except Exception as e:
-                last_error = e
-                err_str = str(e)
-                print(f"[AI] 模型 {variant} 调用失败: {err_str[:100]}...")
-                if "RateLimit" in err_str or "rate_limit" in err_str.lower():
-                    import time
-                    time.sleep(2)
-                continue
-        
+            max_attempts = 2 if "groq" in variant else 1
+            for attempt in range(max_attempts):
+                try:
+                    current_params = params.copy()
+                    current_params["model"] = variant
+                    current_params["num_retries"] = 0
+                    response = completion(**current_params)
+                    content = response.choices[0].message.content
+                    if isinstance(content, list):
+                        content = "\n".join(
+                            item.get("text", str(item)) if isinstance(item, dict) else str(item)
+                            for item in content
+                        )
+                    return content or ""
+                except Exception as e:
+                    last_error = e
+                    err_str = str(e)
+                    print(f"[AI] 모델 {variant} 호출 실패 (시도 {attempt+1}/{max_attempts}): {err_str[:100]}...")
+                    if "RateLimit" in err_str or "rate limit" in err_str.lower():
+                        if attempt < max_attempts - 1:
+                            print("[AI] Rate Limit 초과. Groq TPM 한도 리셋을 위해 60초 대기 후 재시도합니다...")
+                            import time
+                            time.sleep(60)
+                            continue
+                    break
+
         raise last_error
 
     def validate_config(self) -> tuple[bool, str]:
