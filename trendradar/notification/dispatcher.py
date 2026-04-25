@@ -111,14 +111,18 @@ class NotificationDispatcher:
         titles_to_translate = []
         title_locations = []  # 记录标题位置，用于回填
 
-        # 1. 热榜标题（scope 开启 且 区域展示）
-        if scope.get("HOTLIST", True) and display_regions.get("HOTLIST", True):
-            for stat_idx, stat in enumerate(report_data.get("stats", [])):
+        # 1. 统计标题
+        show_hotlist = display_regions.get("HOTLIST", display_regions.get("hotlist", True))
+        stats = report_data.get("stats", [])
+        if stats and scope.get("HOTLIST", scope.get("hotlist", True)) and show_hotlist:
+            for stat_idx, stat in enumerate(stats):
                 for title_idx, title_data in enumerate(stat.get("titles", [])):
                     titles_to_translate.append(title_data.get("title", ""))
                     title_locations.append(("stats", stat_idx, title_idx))
 
-            # 2. 新增热点标题
+        # 2. 新增热点标题
+        show_new_items = display_regions.get("NEW_ITEMS", display_regions.get("new_items", True))
+        if report_data.get("new_titles") and scope.get("HOTLIST", scope.get("hotlist", True)) and show_new_items:
             for source_idx, source in enumerate(report_data.get("new_titles", [])):
                 for title_idx, title_data in enumerate(source.get("titles", [])):
                     titles_to_translate.append(title_data.get("title", ""))
@@ -126,7 +130,8 @@ class NotificationDispatcher:
 
         # 3. RSS 统计标题
         show_rss = display_regions.get("RSS", display_regions.get("rss", True))
-        if not skip_rss and rss_items and scope.get("RSS", True) and show_rss:
+        can_translate_rss = scope.get("RSS", scope.get("rss", True))
+        if not skip_rss and rss_items and can_translate_rss and show_rss:
             print(f"[翻译][DEBUG] RSS items count: {len(rss_items)}")
             if isinstance(rss_items, list) and len(rss_items) > 0:
                 is_grouped = "titles" in rss_items[0]

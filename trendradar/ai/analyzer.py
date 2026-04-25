@@ -73,11 +73,11 @@ class AIAnalyzer:
             print(f"[AI] 配置警告: {error}")
 
         # 从分析配置获取功能参数
-        self.max_news = analysis_config.get("MAX_NEWS_FOR_ANALYSIS", 50)
-        self.include_rss = analysis_config.get("INCLUDE_RSS", True)
+        self.include_rss = analysis_config.get("INCLUDE_RSS", analysis_config.get("include_rss", True))
+        self.max_news = analysis_config.get("MAX_NEWS_FOR_ANALYSIS", analysis_config.get("max_news_for_analysis", 50))
         self.include_rank_timeline = analysis_config.get("INCLUDE_RANK_TIMELINE", False)
         self.include_standalone = analysis_config.get("INCLUDE_STANDALONE", False)
-        self.language = analysis_config.get("LANGUAGE", "Chinese")
+        self.language = analysis_config.get("LANGUAGE", analysis_config.get("language", "Chinese"))
 
         # 加载提示词模板
         self.system_prompt, self.user_prompt_template = load_prompt_template(
@@ -249,6 +249,8 @@ class AIAnalyzer:
         rss_lines = []
         news_count = 0
         rss_count = 0
+
+        print(f"[AI][DEBUG] Entering _prepare_news_content. Stats: {len(stats) if stats else 0}, RSS stats: {len(rss_stats) if rss_stats else 0}")
 
         # 计算总新闻数
         hotlist_total = sum(len(s.get("titles", [])) for s in stats) if stats else 0
