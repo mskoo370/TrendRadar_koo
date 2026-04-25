@@ -324,25 +324,63 @@ class AIAnalyzer:
                         title = t.get("title", "")
                         if not title:
                             continue
+            if isinstance(rss_stats, list) and len(rss_stats) > 0 and "titles" in rss_stats[0]:
+                remaining = self.max_news - news_count
+                for stat in rss_stats:
+                    if rss_count >= remaining:
+                        break
+                    word = stat.get("word", "")
+                    titles = stat.get("titles", [])
+                    if word and titles:
+                        rss_lines.append(f"\n**{word}** ({len(titles)}条)")
+                        for t in titles:
+                            if not isinstance(t, dict):
+                                continue
+                            title = t.get("title", "")
+                            if not title:
+                                continue
 
-                        # 来源
-                        source = t.get("source_name", t.get("feed_name", ""))
+                            # 来源
+                            source = t.get("source_name", t.get("feed_name", ""))
 
-                        # 发布时间
-                        time_display = t.get("time_display", "")
-
-                        # 构建行：[来源] 标题 | 发布时间
-                        if source:
-                            line = f"- [{source}] {title}"
-                        else:
-                            line = f"- {title}"
-                        if time_display:
-                            line += f" | {time_display}"
-                        rss_lines.append(line)
-
-                        rss_count += 1
-                        if rss_count >= remaining:
-                            break
+                            # 发布时间
+                            time_display = t.get("time_display", t.get("published_at", ""))
+ 
+                            # 构建行：[来源] 标题 | 发布时间
+                            if source:
+                                line = f"- [{source}] {title}"
+                            else:
+                                line = f"- {title}"
+                            if time_display:
+                                line += f" | {time_display}"
+                            rss_lines.append(line)
+ 
+                            rss_count += 1
+                            if rss_count >= remaining:
+                                break
+            else:
+                # 兼容模式：如果 rss_stats 是扁平列表（__main__.py 中的 rss_items）
+                remaining = self.max_news - news_count
+                for t in rss_stats:
+                    if rss_count >= remaining:
+                        break
+                    if not isinstance(t, dict):
+                        continue
+                    title = t.get("title", "")
+                    if not title:
+                        continue
+                    
+                    source = t.get("source_name", t.get("feed_name", t.get("source", "")))
+                    time_display = t.get("time_display", t.get("published_at", ""))
+                    
+                    if source:
+                        line = f"- [{source}] {title}"
+                    else:
+                        line = f"- {title}"
+                    if time_display:
+                        line += f" | {time_display}"
+                    rss_lines.append(line)
+                    rss_count += 1
 
         news_content = "\n".join(news_lines) if news_lines else ""
         rss_content = "\n".join(rss_lines) if rss_lines else ""

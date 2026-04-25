@@ -124,19 +124,31 @@ class NotificationDispatcher:
                     titles_to_translate.append(title_data.get("title", ""))
                     title_locations.append(("new_titles", source_idx, title_idx))
 
-        # 3. RSS 统计标题（结构与 stats 一致：[{word, count, titles: [{title, ...}]}]）
+        # 3. RSS 统计标题
         if not skip_rss and rss_items and scope.get("RSS", True) and display_regions.get("RSS", True):
-            for stat_idx, stat in enumerate(rss_items):
-                for title_idx, title_data in enumerate(stat.get("titles", [])):
+            if isinstance(rss_items, list) and len(rss_items) > 0 and "titles" in rss_items[0]:
+                # 结构化格式
+                for stat_idx, stat in enumerate(rss_items):
+                    for title_idx, title_data in enumerate(stat.get("titles", [])):
+                        titles_to_translate.append(title_data.get("title", ""))
+                        title_locations.append(("rss_items", stat_idx, title_idx))
+            else:
+                # 扁平格式
+                for title_idx, title_data in enumerate(rss_items):
                     titles_to_translate.append(title_data.get("title", ""))
-                    title_locations.append(("rss_items", stat_idx, title_idx))
+                    title_locations.append(("rss_items_flat", 0, title_idx))
 
-        # 4. RSS 新增标题（结构与 stats 一致）
+        # 4. RSS 新增标题
         if not skip_rss and rss_new_items and scope.get("RSS", True) and display_regions.get("RSS", True) and display_regions.get("NEW_ITEMS", True):
-            for stat_idx, stat in enumerate(rss_new_items):
-                for title_idx, title_data in enumerate(stat.get("titles", [])):
+            if isinstance(rss_new_items, list) and len(rss_new_items) > 0 and "titles" in rss_new_items[0]:
+                for stat_idx, stat in enumerate(rss_new_items):
+                    for title_idx, title_data in enumerate(stat.get("titles", [])):
+                        titles_to_translate.append(title_data.get("title", ""))
+                        title_locations.append(("rss_new_items", stat_idx, title_idx))
+            else:
+                for title_idx, title_data in enumerate(rss_new_items):
                     titles_to_translate.append(title_data.get("title", ""))
-                    title_locations.append(("rss_new_items", stat_idx, title_idx))
+                    title_locations.append(("rss_new_items_flat", 0, title_idx))
 
         # 5. 独立展示区 - 热榜平台
         if standalone_data and scope.get("STANDALONE", True) and display_regions.get("STANDALONE", False):
@@ -203,8 +215,12 @@ class NotificationDispatcher:
                     report_data["new_titles"][idx1]["titles"][idx2]["title"] = translated
                 elif loc_type == "rss_items" and rss_items:
                     rss_items[idx1]["titles"][idx2]["title"] = translated
+                elif loc_type == "rss_items_flat" and rss_items:
+                    rss_items[idx2]["title"] = translated
                 elif loc_type == "rss_new_items" and rss_new_items:
                     rss_new_items[idx1]["titles"][idx2]["title"] = translated
+                elif loc_type == "rss_new_items_flat" and rss_new_items:
+                    rss_new_items[idx2]["title"] = translated
                 elif loc_type == "standalone_platforms" and standalone_data:
                     standalone_data["platforms"][idx1]["items"][idx2]["title"] = translated
                 elif loc_type == "standalone_rss" and standalone_data:
