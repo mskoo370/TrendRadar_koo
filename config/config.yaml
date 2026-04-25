@@ -115,7 +115,7 @@ rss:
   feeds:
     - id: "yonhap"
       name: "연합뉴스"
-      url: "https://www.yonhapnews.co.kr/rss/economy.xml"  # 변경
+      url: "https://www.yonhapnewstv.co.kr/hot-issue/feed/" # 이 주소로 시도하거나, 안되면 비활성화하세요.
     - id: "mk-news"
       name: "매일경제"
       url: "https://www.mk.co.kr/rss/30100041/"            # ✅ 정상 유지
@@ -501,7 +501,7 @@ ai_analysis:
   mode: "follow_report"
 
   # 分析内容配置
-  max_news_for_analysis: 20        # 热榜+RSS 合计参与分析的新闻数量上限（控制成本关键项）
+  max_news_for_analysis: 10        # 热榜+RSS 合计参与分析的新闻数量上限（控制成本关键项）
                                     # 热榜优先占用配额，RSS 使用剩余配额；独立展示区不受此限制
                                     # 推送消息顶部会显示实际的 AI 分析数供参考
 
