@@ -40,9 +40,12 @@ class AIClient:
         self.fallback_models = config.get("FALLBACK_MODELS", config.get("fallback_models", []))
         
         # LiteLLM 은 Gemini 에 대해 GEMINI_API_KEY 환경 변수를 사용함
-        # AI_API_KEY 로 받은 값을 GEMINI_API_KEY 에도 세팅
         if self.api_key and "gemini" in self.model.lower():
             os.environ["GEMINI_API_KEY"] = self.api_key
+        
+        # LiteLLM 은 Groq 에 대해 GROQ_API_KEY 환경 변수를 사용함
+        if self.api_key and "groq" in self.model.lower():
+            os.environ["GROQ_API_KEY"] = self.api_key
         
         # 打印初始化状态
         masked_key = f"{self.api_key[:6]}******" if self.api_key else "None"
