@@ -1707,11 +1707,16 @@ class NewsAnalyzer:
         """执行分析流程"""
         try:
             self._initialize_and_check_config()
+            if not self.ctx.config.get("ENABLE_CRAWLER", True) and not self.ctx.rss_enabled:
+                return
 
             mode_strategy = self._get_mode_strategy()
 
             # 抓取热榜数据
-            results, id_to_name, failed_ids = self._crawl_data()
+            if self.ctx.config.get("ENABLE_CRAWLER", True):
+                results, id_to_name, failed_ids = self._crawl_data()
+            else:
+                results, id_to_name, failed_ids = {}, {}, []
 
             # 抓取 RSS 数据（如果启用），返回统计条目、新增条目和原始条目
             rss_items, rss_new_items, raw_rss_items, rss_new_urls = self._crawl_rss_data()
