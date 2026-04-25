@@ -115,7 +115,7 @@ class AIClient:
             try:
                 current_params = params.copy()
                 current_params["model"] = variant
-                print(f"[AI] 尝试调用模型: {variant}")
+                current_params["num_retries"] = 0  # 各模型只尝试一次，不浪费配额
                 response = completion(**current_params)
                 
                 # 提取响应内容
@@ -128,7 +128,12 @@ class AIClient:
                 return content or ""
             except Exception as e:
                 last_error = e
-                print(f"[AI] 模型 {variant} 调用失败: {str(e)[:100]}...")
+                err_str = str(e)
+                print(f"[AI] 模型 {variant} 调用失败: {err_str[:100]}...")
+                # RateLimitError 인 경우 잠시 대기 후 다음 모델 시도
+                if "RateLimit" in err_str or "rate_limit" in err_str.lower():
+                    import time
+                    time.sleep(2)
                 continue
         
         # 如果全部失败
