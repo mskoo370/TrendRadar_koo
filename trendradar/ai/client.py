@@ -102,11 +102,11 @@ class AIClient:
         if "gemini" in self.model.lower():
             # 按优先级尝试各种 Gemini 模型名
             model_variants = [
-                "gemini/gemini-2.0-flash-lite",
-                "gemini/gemini-2.0-flash",
                 "gemini/gemini-1.5-flash",
                 "gemini/gemini-1.5-flash-latest",
                 "gemini/gemini-1.5-pro",
+                "gemini/gemini-2.0-flash-lite",
+                "gemini/gemini-2.0-flash",
                 "gemini/gemini-pro",
             ]
             # 优先尝试配置的模型
@@ -117,23 +117,26 @@ class AIClient:
 
         last_error = None
         
-        # Gemini 모델인 경우 google-generativeai SDK로 직접 호출 (LiteLLM v1beta 문제 우회)
+        # Gemini 모델인 경우 google-genai SDK로 직접 호출 (LiteLLM v1beta 문제 우회)
         if "gemini" in self.model.lower() and self.api_key:
             try:
-                import google.generativeai as genai
-                genai.configure(api_key=self.api_key)
+                from google import genai
+                from google.genai import types
+                client = genai.Client(api_key=self.api_key)
                 base_name = self.model.split("/")[-1]
-                gemini_model = genai.GenerativeModel(base_name)
-                # system prompt 처리
+                # system + user 메시지 합치기
                 system_parts = [m["content"] for m in messages if m["role"] == "system"]
                 user_parts = [m["content"] for m in messages if m["role"] != "system"]
                 prompt = "\n".join(system_parts + user_parts)
-                response = gemini_model.generate_content(prompt)
-                print(f"[AI] Google SDK 직접 호출 성공: {base_name}")
+                response = client.models.generate_content(
+                    model=base_name,
+                    contents=prompt
+                )
+                print(f"[AI] Google GenAI SDK 성공: {base_name}")
                 return response.text or ""
             except Exception as e:
                 last_error = e
-                print(f"[AI] Google SDK 직접 호출 실패: {str(e)[:120]}...")
+                print(f"[AI] Google GenAI SDK 실패: {str(e)[:150]}...")
         
         # LiteLLM fallback
         for variant in model_variants:
