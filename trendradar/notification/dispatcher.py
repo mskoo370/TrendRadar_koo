@@ -120,7 +120,7 @@ class NotificationDispatcher:
                     titles_to_translate.append(title_data.get("title", ""))
                     title_locations.append(("stats", stat_idx, title_idx))
 
-        # 2. 新增热点标题
+        # 2. 신규 핫 트렌드标题
         show_new_items = display_regions.get("NEW_ITEMS", display_regions.get("new_items", True))
         if report_data.get("new_titles") and scope.get("HOTLIST", scope.get("hotlist", True)) and show_new_items:
             for source_idx, source in enumerate(report_data.get("new_titles", [])):
@@ -260,14 +260,14 @@ class NotificationDispatcher:
 
         Args:
             report_data: 报告数据（由 prepare_report_data 生成）
-            report_type: 报告类型（如 "全天汇总"、"当前榜单"、"增量分析"）
+            report_type: 报告类型（如 "全天汇总"、"현재 랭킹"、"실시간 업데이트"）
             update_info: 版本更新信息（可选）
             proxy_url: 代理 URL（可选）
             mode: 报告模式 (daily/current/incremental)
             html_file_path: HTML 报告文件路径（邮件使用）
             rss_items: RSS 统计条目列表（用于 RSS 统计区块）
             rss_new_items: RSS 新增条目列表（用于 RSS 新增区块）
-            ai_analysis: AI 分析结果（可选）
+            ai_analysis: AI 분석结果（可选）
             standalone_data: 独立展示区数据（可选）
             skip_translation: 跳过翻译（当数据已在上游翻译过时使用）
 
@@ -348,7 +348,7 @@ class NotificationDispatcher:
                 ai_analysis, display_regions, standalone_data
             )
 
-        # 邮件（保持原有逻辑，已支持多收件人，AI 分析已嵌入 HTML）
+        # 邮件（保持原有逻辑，已支持多收件人，AI 분석已嵌入 HTML）
         if (
             self.config.get("EMAIL_FROM")
             and self.config.get("EMAIL_PASSWORD")
@@ -814,7 +814,7 @@ class NotificationDispatcher:
         """发送邮件（保持原有逻辑，已支持多收件人）
 
         Note:
-            AI 分析内容已在 HTML 生成时嵌入，无需在此传递
+            AI 분석内容已在 HTML 生成时嵌入，无需在此传递
         """
         return send_to_email(
             from_email=self.config["EMAIL_FROM"],

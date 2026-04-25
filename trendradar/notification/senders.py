@@ -34,7 +34,7 @@ from .formatters import convert_markdown_to_mrkdwn, strip_markdown
 
 
 def _render_ai_analysis(ai_analysis: Any, channel: str) -> str:
-    """渲染 AI 分析内容为指定渠道格式"""
+    """渲染 AI 분석内容为指定渠道格式"""
     if not ai_analysis:
         return ""
 
@@ -122,12 +122,12 @@ def send_to_feishu(
     # 日志前缀
     log_prefix = f"飞书{account_label}" if account_label else "飞书"
 
-    # 渲染 AI 分析内容（如果有）
+    # 渲染 AI 분석内容（如果有）
     ai_content = None
     ai_stats = None
     if ai_analysis:
         ai_content = _render_ai_analysis(ai_analysis, "feishu")
-        # 提取 AI 分析统计数据（只要 AI 分析成功就显示）
+        # 提取 AI 분석统计数据（只要 AI 분석成功就显示）
         if getattr(ai_analysis, "success", False):
             ai_stats = {
                 "total_news": getattr(ai_analysis, "total_news", 0),
@@ -266,12 +266,12 @@ def send_to_dingtalk(
     # 日志前缀
     log_prefix = f"钉钉{account_label}" if account_label else "钉钉"
 
-    # 渲染 AI 分析内容（如果有）
+    # 渲染 AI 분석内容（如果有）
     ai_content = None
     ai_stats = None
     if ai_analysis:
         ai_content = _render_ai_analysis(ai_analysis, "dingtalk")
-        # 提取 AI 分析统计数据（只要 AI 分析成功就显示）
+        # 提取 AI 분석统计数据（只要 AI 분석成功就显示）
         if getattr(ai_analysis, "success", False):
             ai_stats = {
                 "total_news": getattr(ai_analysis, "total_news", 0),
@@ -407,12 +407,12 @@ def send_to_wework(
     # text 模式使用 wework_text，markdown 模式使用 wework
     header_format_type = "wework_text" if is_text_mode else "wework"
 
-    # 渲染 AI 分析内容（如果有）
+    # 渲染 AI 분석内容（如果有）
     ai_content = None
     ai_stats = None
     if ai_analysis:
         ai_content = _render_ai_analysis(ai_analysis, "wework")
-        # 提取 AI 分析统计数据（只要 AI 分析成功就显示）
+        # 提取 AI 분석统计数据（只要 AI 분석成功就显示）
         if getattr(ai_analysis, "success", False):
             ai_stats = {
                 "total_news": getattr(ai_analysis, "total_news", 0),
@@ -537,12 +537,12 @@ def send_to_telegram(
     # 日志前缀
     log_prefix = f"Telegram{account_label}" if account_label else "Telegram"
 
-    # 渲染 AI 分析内容（如果有）
+    # 渲染 AI 분석内容（如果有）
     ai_content = None
     ai_stats = None
     if ai_analysis:
         ai_content = _render_ai_analysis(ai_analysis, "telegram")
-        # 提取 AI 分析统计数据（只要 AI 分析成功就显示）
+        # 提取 AI 분석统计数据（只要 AI 분석成功就显示）
         if getattr(ai_analysis, "success", False):
             ai_stats = {
                 "total_news": getattr(ai_analysis, "total_news", 0),
@@ -642,7 +642,7 @@ def send_to_email(
         bool: 发送是否成功
 
     Note:
-        AI 分析内容已在 HTML 生成时嵌入，无需再追加
+        AI 분석内容已在 HTML 生成时嵌入，无需再追加
     """
     try:
         if not html_file_path or not Path(html_file_path).exists():
@@ -819,8 +819,8 @@ def send_to_ntfy(
     # 避免 HTTP header 编码问题
     report_type_en_map = {
         "全天汇总": "Daily Summary",
-        "当前榜单": "Current Ranking",
-        "增量分析": "Incremental Update",
+        "현재 랭킹": "Current Ranking",
+        "실시간 업데이트": "Incremental Update",
         "通知连通性测试": "Notification Test",
     }
     report_type_en = report_type_en_map.get(report_type, "News Report")
@@ -846,12 +846,12 @@ def send_to_ntfy(
     if proxy_url:
         proxies = {"http": proxy_url, "https": proxy_url}
 
-    # 渲染 AI 分析内容（如果有），合并到主内容中
+    # 渲染 AI 분석内容（如果有），合并到主内容中
     ai_content = None
     ai_stats = None
     if ai_analysis:
         ai_content = _render_ai_analysis(ai_analysis, "ntfy")
-        # 提取 AI 分析统计数据（只要 AI 分析成功就显示）
+        # 提取 AI 분석统计数据（只要 AI 분석成功就显示）
         if getattr(ai_analysis, "success", False):
             ai_stats = {
                 "total_news": getattr(ai_analysis, "total_news", 0),
@@ -1033,12 +1033,12 @@ def send_to_bark(
     # 构建正确的 API 端点
     api_endpoint = f"{parsed_url.scheme}://{parsed_url.netloc}/push"
 
-    # 渲染 AI 分析内容（如果有），合并到主内容中
+    # 渲染 AI 분석内容（如果有），合并到主内容中
     ai_content = None
     ai_stats = None
     if ai_analysis:
         ai_content = _render_ai_analysis(ai_analysis, "bark")
-        # 提取 AI 分析统计数据（只要 AI 分析成功就显示）
+        # 提取 AI 분석统计数据（只要 AI 분석成功就显示）
         if getattr(ai_analysis, "success", False):
             ai_stats = {
                 "total_news": getattr(ai_analysis, "total_news", 0),
@@ -1196,12 +1196,12 @@ def send_to_slack(
     # 日志前缀
     log_prefix = f"Slack{account_label}" if account_label else "Slack"
 
-    # 渲染 AI 分析内容（如果有），合并到主内容中
+    # 渲染 AI 분석内容（如果有），合并到主内容中
     ai_content = None
     ai_stats = None
     if ai_analysis:
         ai_content = _render_ai_analysis(ai_analysis, "slack")
-        # 提取 AI 分析统计数据（只要 AI 分析成功就显示）
+        # 提取 AI 분석统计数据（只要 AI 분석成功就显示）
         if getattr(ai_analysis, "success", False):
             ai_stats = {
                 "total_news": getattr(ai_analysis, "total_news", 0),
@@ -1319,13 +1319,13 @@ def send_to_generic_webhook(
     # 日志前缀
     log_prefix = f"通用Webhook{account_label}" if account_label else "通用Webhook"
 
-    # 渲染 AI 分析内容（如果有）
+    # 渲染 AI 분석内容（如果有）
     ai_content = None
     ai_stats = None
     if ai_analysis:
-        # 通用 Webhook 使用 markdown 格式渲染 AI 分析
+        # 通用 Webhook 使用 markdown 格式渲染 AI 분석
         ai_content = _render_ai_analysis(ai_analysis, "wework")
-        # 提取 AI 分析统计数据
+        # 提取 AI 분석统计数据
         if getattr(ai_analysis, "success", False):
             ai_stats = {
                 "total_news": getattr(ai_analysis, "total_news", 0),

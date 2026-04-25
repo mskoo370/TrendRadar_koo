@@ -191,7 +191,7 @@ def count_word_frequency(
 
                 if not quiet:
                     print(
-                        f"当前榜单模式：最新时间 {latest_time}，筛选出 {sum(len(titles) for titles in results_to_process.values())} 条当前榜单新闻"
+                        f"현재 랭킹模式：最新时间 {latest_time}，筛选出 {sum(len(titles) for titles in results_to_process.values())} 条현재 랭킹新闻"
                     )
             else:
                 results_to_process = results
@@ -199,7 +199,7 @@ def count_word_frequency(
             results_to_process = results
         all_news_are_new = False
     else:
-        # 当日汇总模式：处理所有新闻
+        # 당일 요약模式：处理所有新闻
         results_to_process = results
         all_news_are_new = False
         total_input_news = sum(len(titles) for titles in results.values())
@@ -208,7 +208,7 @@ def count_word_frequency(
             if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新闻"
             else "频率词过滤"
         )
-        print(f"当日汇总模式：处理 {total_input_news} 条新闻，模式：{filter_status}")
+        print(f"당일 요약模式：处理 {total_input_news} 条新闻，模式：{filter_status}")
 
     word_stats = {}
     total_titles = 0
@@ -407,7 +407,7 @@ def count_word_frequency(
             )
             if not quiet:
                 print(
-                    f"当前榜单模式：当天第一次爬取，{total_input_news} 条当前榜单新闻中有 {matched_new_count} 条{filter_status}"
+                    f"현재 랭킹模式：当天第一次爬取，{total_input_news} 条현재 랭킹新闻中有 {matched_new_count} 条{filter_status}"
                 )
         else:
             matched_count = sum(stat["count"] for stat in word_stats.values())
@@ -418,7 +418,7 @@ def count_word_frequency(
             )
             if not quiet:
                 print(
-                    f"当前榜单模式：{total_input_news} 条当前榜单新闻中有 {matched_count} 条{filter_status}"
+                    f"현재 랭킹模式：{total_input_news} 条현재 랭킹新闻中有 {matched_count} 条{filter_status}"
                 )
 
     stats = []
@@ -485,7 +485,7 @@ def count_word_frequency(
     # 打印过滤后的匹配新闻数
     matched_news_count = sum(len(stat["titles"]) for stat in stats if stat["count"] > 0)
     if not quiet and mode == "daily":
-        print(f"当日汇总模式：处理 {total_titles} 条新闻，模式：频率词过滤")
+        print(f"당일 요약模式：处理 {total_titles} 条新闻，模式：频率词过滤")
         print(f"频率词过滤后：{matched_news_count} 条新闻匹配")
 
     return stats, total_titles

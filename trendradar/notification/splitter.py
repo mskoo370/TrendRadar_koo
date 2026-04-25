@@ -174,9 +174,9 @@ def split_content_into_batches(
         rss_new_items: RSS 新增条目列表（可选，用于新增区块）
         timezone: 时区名称（用于 RSS 时间格式化）
         display_mode: 显示模式 (keyword=按关键词分组, platform=按平台分组)
-        ai_content: AI 分析内容（已渲染的字符串，可选）
+        ai_content: AI 분석内容（已渲染的字符串，可选）
         standalone_data: 独立展示区数据（可选），包含 platforms 和 rss_feeds 列表
-        ai_stats: AI 分析统计数据（可选），包含 total_news, analyzed_news, max_news_limit 等
+        ai_stats: AI 분석统计数据（可选），包含 total_news, analyzed_news, max_news_limit 等
 
     Returns:
         分批后的消息内容列表
@@ -212,7 +212,7 @@ def split_content_into_batches(
     # 构建头部信息
     base_header = ""
     
-    # 准备 AI 分析统计行（如果存在）
+    # 准备 AI 분석统计行（如果存在）
     ai_stats_line = ""
     if ai_stats and ai_stats.get("analyzed_news", 0) > 0:
         analyzed_news = ai_stats.get("analyzed_news", 0)
@@ -230,18 +230,18 @@ def split_content_into_batches(
         if ai_mode and ai_mode != mode:
             mode_map = {
                 "daily": "全天汇总",
-                "current": "当前榜单",
-                "incremental": "增量分析"
+                "current": "현재 랭킹",
+                "incremental": "실시간 업데이트"
             }
             mode_label = mode_map.get(ai_mode, ai_mode)
             mode_suffix = f" ({mode_label})"
 
         if format_type in ("wework", "bark", "ntfy", "feishu", "dingtalk"):
-            ai_stats_line = f"**AI 分析数：** {news_display}{mode_suffix}\n"
+            ai_stats_line = f"**AI 분석数：** {news_display}{mode_suffix}\n"
         elif format_type == "slack":
-            ai_stats_line = f"*AI 分析数：* {news_display}{mode_suffix}\n"
+            ai_stats_line = f"*AI 분석数：* {news_display}{mode_suffix}\n"
         elif format_type == "telegram":
-            ai_stats_line = f"AI 分析数： {news_display}{mode_suffix}\n"
+            ai_stats_line = f"AI 분석数： {news_display}{mode_suffix}\n"
 
     # 构建统一的头部（总是显示总新闻数、时间和类型）
     if format_type in ("wework", "bark"):
@@ -336,7 +336,7 @@ def split_content_into_batches(
         if mode == "incremental":
             mode_text = "增量模式下暂无新增匹配的热点词汇"
         elif mode == "current":
-            mode_text = "当前榜单模式下暂无匹配的热点词汇"
+            mode_text = "현재 랭킹模式下暂无匹配的热点词汇"
         else:
             mode_text = "暂无匹配的热点词汇"
         simple_content = f"📭 {mode_text}\n\n"
@@ -596,33 +596,33 @@ def split_content_into_batches(
         if add_separator and current_batch_has_content:
             # 需要添加分割线
             if format_type in ("wework", "bark"):
-                new_header = f"\n\n\n\n🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"\n\n\n\n🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
             elif format_type == "telegram":
                 new_header = (
-                    f"\n\n🆕 本次新增热点新闻 (共 {report_data['total_new_count']} 条)\n\n"
+                    f"\n\n🆕 本次신규 핫 트렌드新闻 (共 {report_data['total_new_count']} 条)\n\n"
                 )
             elif format_type == "ntfy":
-                new_header = f"\n\n🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"\n\n🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
             elif format_type == "feishu":
-                new_header = f"\n{feishu_separator}\n\n🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"\n{feishu_separator}\n\n🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
             elif format_type == "dingtalk":
-                new_header = f"\n---\n\n🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"\n---\n\n🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
             elif format_type == "slack":
-                new_header = f"\n\n🆕 *本次新增热点新闻* (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"\n\n🆕 *本次신규 핫 트렌드新闻* (共 {report_data['total_new_count']} 条)\n\n"
         else:
             # 不需要分割线（第一个区域）
             if format_type in ("wework", "bark"):
-                new_header = f"🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
             elif format_type == "telegram":
-                new_header = f"🆕 本次新增热点新闻 (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"🆕 本次신규 핫 트렌드新闻 (共 {report_data['total_new_count']} 条)\n\n"
             elif format_type == "ntfy":
-                new_header = f"🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
             elif format_type == "feishu":
-                new_header = f"🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
             elif format_type == "dingtalk":
-                new_header = f"🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
             elif format_type == "slack":
-                new_header = f"🆕 *本次新增热点新闻* (共 {report_data['total_new_count']} 条)\n\n"
+                new_header = f"🆕 *本次신규 핫 트렌드新闻* (共 {report_data['total_new_count']} 条)\n\n"
 
         test_content = current_batch + new_header
         if (
@@ -759,9 +759,9 @@ def split_content_into_batches(
 
         return current_batch, current_batch_has_content, batches
 
-    # 定义处理 AI 分析的函数
+    # 定义处理 AI 분석的函数
     def process_ai_section(current_batch, current_batch_has_content, batches, add_separator=True):
-        """处理 AI 分析内容"""
+        """处理 AI 분석内容"""
         nonlocal ai_content
         if not ai_content:
             return current_batch, current_batch_has_content, batches
@@ -891,7 +891,7 @@ def split_content_into_batches(
                 current_batch, current_batch_has_content, batches, add_separator
             )
         elif region == "ai_analysis":
-            # 处理 AI 分析
+            # 处理 AI 분석
             current_batch, current_batch_has_content, batches = process_ai_section(
                 current_batch, current_batch_has_content, batches, add_separator
             )

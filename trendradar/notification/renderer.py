@@ -35,7 +35,7 @@ def render_feishu_content(
         region_order: 区域显示顺序列表
         get_time_func: 获取当前时间的函数（可选，默认使用 datetime.now()）
         rss_items: RSS 条目列表（可选，用于合并推送）
-        show_new_section: 是否显示新增热点区域
+        show_new_section: 是否显示신규 핫 트렌드区域
 
     Returns:
         格式化的飞书消息内容
@@ -79,7 +79,7 @@ def render_feishu_content(
     new_titles_content = ""
     if show_new_section and report_data["new_titles"]:
         new_titles_content += (
-            f"🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
         )
 
         for source_data in report_data["new_titles"]:
@@ -122,7 +122,7 @@ def render_feishu_content(
         if mode == "incremental":
             mode_text = "增量模式下暂无新增匹配的热点词汇"
         elif mode == "current":
-            mode_text = "当前榜单模式下暂无匹配的热点词汇"
+            mode_text = "현재 랭킹模式下暂无匹配的热点词汇"
         else:
             mode_text = "暂无匹配的热点词汇"
         text_content = f"📭 {mode_text}\n\n"
@@ -165,7 +165,7 @@ def render_dingtalk_content(
         region_order: 区域显示顺序列表
         get_time_func: 获取当前时间的函数（可选，默认使用 datetime.now()）
         rss_items: RSS 条目列表（可选，用于合并推送）
-        show_new_section: 是否显示新增热点区域
+        show_new_section: 是否显示신규 핫 트렌드区域
 
     Returns:
         格式化的钉钉消息内容
@@ -220,7 +220,7 @@ def render_dingtalk_content(
     new_titles_content = ""
     if show_new_section and report_data["new_titles"]:
         new_titles_content += (
-            f"🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            f"🆕 **本次신규 핫 트렌드新闻** (共 {report_data['total_new_count']} 条)\n\n"
         )
 
         for source_data in report_data["new_titles"]:
@@ -263,7 +263,7 @@ def render_dingtalk_content(
         if mode == "incremental":
             mode_text = "增量模式下暂无新增匹配的热点词汇"
         elif mode == "current":
-            mode_text = "当前榜单模式下暂无匹配的热点词汇"
+            mode_text = "현재 랭킹模式下暂无匹配的热点词汇"
         else:
             mode_text = "暂无匹配的热点词汇"
         text_content += f"📭 {mode_text}\n\n"
