@@ -127,8 +127,12 @@ class NotificationDispatcher:
         # 3. RSS 统计标题
         show_rss = display_regions.get("RSS", display_regions.get("rss", True))
         if not skip_rss and rss_items and scope.get("RSS", True) and show_rss:
-            if isinstance(rss_items, list) and len(rss_items) > 0 and "titles" in rss_items[0]:
-                # 结构化格式
+            print(f"[翻译][DEBUG] RSS items count: {len(rss_items)}")
+            if isinstance(rss_items, list) and len(rss_items) > 0:
+                is_grouped = "titles" in rss_items[0]
+                print(f"[翻译][DEBUG] Is RSS grouped: {is_grouped}")
+                if is_grouped:
+                    # 结构化格式
                 for stat_idx, stat in enumerate(rss_items):
                     for title_idx, title_data in enumerate(stat.get("titles", [])):
                         titles_to_translate.append(title_data.get("title", ""))

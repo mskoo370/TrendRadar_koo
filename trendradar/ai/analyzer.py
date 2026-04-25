@@ -317,9 +317,13 @@ class AIAnalyzer:
         # RSS 内容（仅在启用时构建）
         if self.include_rss and rss_stats:
             remaining = self.max_news - news_count
+            print(f"[AI][DEBUG] RSS stats count: {len(rss_stats)}, remaining space: {remaining}")
+            if len(rss_stats) > 0:
+                print(f"[AI][DEBUG] First RSS stat keys: {list(rss_stats[0].keys()) if isinstance(rss_stats[0], dict) else 'Not a dict'}")
             
             # 判断 RSS 数据结构 (是否为统计后的分组格式)
             is_grouped = isinstance(rss_stats, list) and len(rss_stats) > 0 and "titles" in rss_stats[0]
+            print(f"[AI][DEBUG] Is RSS grouped format: {is_grouped}")
             
             if is_grouped:
                 for stat in rss_stats:
