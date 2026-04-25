@@ -133,10 +133,10 @@ class NotificationDispatcher:
                 print(f"[翻译][DEBUG] Is RSS grouped: {is_grouped}")
                 if is_grouped:
                     # 结构化格式
-                for stat_idx, stat in enumerate(rss_items):
-                    for title_idx, title_data in enumerate(stat.get("titles", [])):
-                        titles_to_translate.append(title_data.get("title", ""))
-                        title_locations.append(("rss_items", stat_idx, title_idx))
+                    for stat_idx, stat in enumerate(rss_items):
+                        for title_idx, title_data in enumerate(stat.get("titles", [])):
+                            titles_to_translate.append(title_data.get("title", ""))
+                            title_locations.append(("rss_items", stat_idx, title_idx))
             else:
                 # 扁平格式
                 for title_idx, title_data in enumerate(rss_items):
