@@ -102,46 +102,18 @@ class AIClient:
 
         # 调用 LiteLLM (带自动重试和模型名容错)
         model_variants = [self.model]
-        if "gemini" in self.model.lower():
-            # 按优先级尝试各种 Gemini 模型名
+        if "groq" in self.model.lower():
             model_variants = [
-                "gemini/gemini-1.5-flash",
-                "gemini/gemini-1.5-flash-latest",
-                "gemini/gemini-1.5-pro",
-                "gemini/gemini-2.0-flash-lite",
-                "gemini/gemini-2.0-flash",
-                "gemini/gemini-pro",
+                self.model,
+                "groq/llama-3.1-8b-instant",
+                "groq/llama3-8b-8192",
+                "groq/llama-3.3-70b-versatile",
+                "groq/llama3-70b-8192",
+                "groq/mixtral-8x7b-32768",
             ]
-            # 优先尝试配置的模型
-            if self.model not in model_variants:
-                model_variants.insert(0, self.model)
-            # 去重保持顺序
             model_variants = list(dict.fromkeys(model_variants))
 
         last_error = None
-        
-        # Gemini 모델인 경우 google-genai SDK로 직접 호출 (v1 API 강제로 v1beta 문제 우회)
-        if "gemini" in self.model.lower() and self.api_key:
-            try:
-                from google import genai
-                # v1 (안정 버전) 강제 - v1beta 에서 발생하는 404/NotFound 문제 해결
-                client = genai.Client(
-                    api_key=self.api_key,
-                    http_options={"api_version": "v1"}
-                )
-                base_name = self.model.split("/")[-1]
-                system_parts = [m["content"] for m in messages if m["role"] == "system"]
-                user_parts = [m["content"] for m in messages if m["role"] != "system"]
-                prompt = "\n".join(system_parts + user_parts)
-                response = client.models.generate_content(
-                    model=base_name,
-                    contents=prompt
-                )
-                print(f"[AI] Google GenAI SDK(v1) 성공: {base_name}")
-                return response.text or ""
-            except Exception as e:
-                last_error = e
-                print(f"[AI] Google GenAI SDK(v1) 실패: {str(e)[:150]}...")
         
         # LiteLLM fallback
         for variant in model_variants:
