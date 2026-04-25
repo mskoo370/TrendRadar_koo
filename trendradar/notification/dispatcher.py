@@ -132,8 +132,11 @@ class NotificationDispatcher:
         show_rss = display_regions.get("RSS", display_regions.get("rss", True))
         can_translate_rss = scope.get("RSS", scope.get("rss", True))
         print(f"[翻译][DEBUG] RSS check: skip_rss={skip_rss}, has_items={bool(rss_items)}, can_translate={can_translate_rss}, show_rss={show_rss}")
-        if not skip_rss and rss_items and can_translate_rss and show_rss:
-            print(f"[翻译][DEBUG] RSS items count: {len(rss_items)}")
+        
+        # 即使 skip_rss 为 True，只要 rss_items 有内容且启用了显示/翻译，就尝试翻译
+        if (not skip_rss or rss_items) and can_translate_rss and show_rss:
+            if rss_items:
+                print(f"[翻译][DEBUG] RSS items count: {len(rss_items)}")
             if isinstance(rss_items, list) and len(rss_items) > 0:
                 is_grouped = "titles" in rss_items[0]
                 print(f"[翻译][DEBUG] Is RSS grouped: {is_grouped}")

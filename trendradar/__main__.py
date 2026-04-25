@@ -876,13 +876,20 @@ class NewsAnalyzer:
         if trans_config.get("ENABLED", False):
             dispatcher = self.ctx.create_notification_dispatcher()
             display_regions = self.ctx.config.get("DISPLAY", {}).get("REGIONS", {})
-            _, rss_items, rss_new_items, _ = \
+            print(f"[翻译][DEBUG] Pipeline: rss_items count: {len(rss_items) if rss_items else 0}")
+            _, translated_rss, translated_new_rss, _ = \
                 dispatcher.translate_content(
                     report_data={"stats": [], "new_titles": []},
                     rss_items=rss_items,
                     rss_new_items=rss_new_items,
                     display_regions=display_regions,
+                    skip_rss=False
                 )
+            # 只有在翻译成功返回非空数据时才覆盖，防止原数据被空列表冲掉
+            if translated_rss:
+                rss_items = translated_rss
+            if translated_new_rss:
+                rss_new_items = translated_new_rss
 
         # HTML生成（如果启用）— 使用翻译后的数据
         html_file = None
