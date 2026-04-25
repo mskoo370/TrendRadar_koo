@@ -467,7 +467,7 @@ class NewsAnalyzer:
     ) -> Optional[AIAnalysisResult]:
         """执行 AI 分析"""
         analysis_config = self.ctx.config.get("AI_ANALYSIS", {})
-        if not analysis_config.get("ENABLED", False):
+        if not analysis_config.get("ENABLED", analysis_config.get("enabled", False)):
             return None
 
         # 调度系统决策
@@ -970,7 +970,7 @@ class NewsAnalyzer:
             # AI 分析：优先使用传入的结果，避免重复分析
             if ai_result is None:
                 ai_config = cfg.get("AI_ANALYSIS", {})
-                if ai_config.get("ENABLED", False):
+                if ai_config.get("ENABLED", ai_config.get("enabled", False)):
                     ai_result = self._run_ai_analysis(
                         stats, rss_items, mode, report_type, id_to_name,
                         current_results=current_results, schedule=schedule
@@ -1849,8 +1849,8 @@ def _run_doctor(config_path: Optional[str] = None) -> bool:
             _record_doctor_result(results, "fail", "调度配置", f"解析失败: {e}")
 
         # 5) AI 配置检查（按功能场景区分严重级别）
-        ai_analysis_enabled = config.get("AI_ANALYSIS", {}).get("ENABLED", False)
-        ai_translation_enabled = config.get("AI_TRANSLATION", {}).get("ENABLED", False)
+        ai_analysis_enabled = config.get("AI_ANALYSIS", {}).get("ENABLED", config.get("AI_ANALYSIS", {}).get("enabled", False))
+        ai_translation_enabled = config.get("AI_TRANSLATION", {}).get("ENABLED", config.get("AI_TRANSLATION", {}).get("enabled", False))
         ai_filter_enabled = config.get("FILTER", {}).get("METHOD", "keyword") == "ai"
         ai_enabled = ai_analysis_enabled or ai_translation_enabled or ai_filter_enabled
 

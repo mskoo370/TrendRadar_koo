@@ -111,7 +111,7 @@ class AppContext:
     @property
     def rss_enabled(self) -> bool:
         """RSS 是否启用"""
-        return self.rss_config.get("ENABLED", False)
+        return self.rss_config.get("ENABLED", self.rss_config.get("enabled", False))
 
     @property
     def rss_feeds(self) -> List[Dict]:
@@ -201,7 +201,7 @@ class AppContext:
                 },
                 local_retention_days=local_config.get("RETENTION_DAYS", 0),
                 remote_retention_days=remote_config.get("RETENTION_DAYS", 0),
-                pull_enabled=pull_config.get("ENABLED", False),
+                pull_enabled=pull_config.get("ENABLED", pull_config.get("enabled", False)),
                 pull_days=pull_config.get("DAYS", 7),
                 timezone=self.timezone,
             )
@@ -466,7 +466,7 @@ class AppContext:
         # 创建翻译器（如果启用）
         translator = None
         trans_config = self.config.get("AI_TRANSLATION", {})
-        if trans_config.get("ENABLED", False):
+        if trans_config.get("ENABLED", trans_config.get("enabled", False)):
             ai_config = self.config.get("AI", {})
             translator = AITranslator(trans_config, ai_config)
 
