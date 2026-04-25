@@ -30,14 +30,18 @@ class AIClient:
                 - NUM_RETRIES: 重试次数（可选）
                 - FALLBACK_MODELS: 备用模型列表（可选）
         """
-        self.model = config.get("MODEL", "deepseek/deepseek-chat")
-        self.api_key = config.get("API_KEY") or os.environ.get("AI_API_KEY", "")
-        self.api_base = config.get("API_BASE", "")
-        self.temperature = config.get("TEMPERATURE", 1.0)
-        self.max_tokens = config.get("MAX_TOKENS", 5000)
-        self.timeout = config.get("TIMEOUT", 120)
-        self.num_retries = config.get("NUM_RETRIES", 2)
-        self.fallback_models = config.get("FALLBACK_MODELS", [])
+        self.model = config.get("MODEL", config.get("model", "deepseek/deepseek-chat"))
+        self.api_key = config.get("API_KEY", config.get("api_key")) or os.environ.get("AI_API_KEY", "")
+        self.api_base = config.get("API_BASE", config.get("api_base", ""))
+        self.temperature = config.get("TEMPERATURE", config.get("temperature", 1.0))
+        self.max_tokens = config.get("MAX_TOKENS", config.get("max_tokens", 5000))
+        self.timeout = config.get("TIMEOUT", config.get("timeout", 120))
+        self.num_retries = config.get("NUM_RETRIES", config.get("num_retries", 2))
+        self.fallback_models = config.get("FALLBACK_MODELS", config.get("fallback_models", []))
+        
+        # 打印初始化状态
+        masked_key = f"{self.api_key[:6]}******" if self.api_key else "None"
+        print(f"[AI] Client 초기화: model={self.model}, api_key={masked_key}")
 
     def chat(
         self,
