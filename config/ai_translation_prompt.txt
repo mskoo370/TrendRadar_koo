@@ -15,4 +15,4 @@
 [user]
 다음을 한국어로 번역하세요:
 
-{batch_content}
+{content}
