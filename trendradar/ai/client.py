@@ -117,14 +117,16 @@ class AIClient:
 
         last_error = None
         
-        # Gemini 모델인 경우 google-genai SDK로 직접 호출 (LiteLLM v1beta 문제 우회)
+        # Gemini 모델인 경우 google-genai SDK로 직접 호출 (v1 API 강제로 v1beta 문제 우회)
         if "gemini" in self.model.lower() and self.api_key:
             try:
                 from google import genai
-                from google.genai import types
-                client = genai.Client(api_key=self.api_key)
+                # v1 (안정 버전) 강제 - v1beta 에서 발생하는 404/NotFound 문제 해결
+                client = genai.Client(
+                    api_key=self.api_key,
+                    http_options={"api_version": "v1"}
+                )
                 base_name = self.model.split("/")[-1]
-                # system + user 메시지 합치기
                 system_parts = [m["content"] for m in messages if m["role"] == "system"]
                 user_parts = [m["content"] for m in messages if m["role"] != "system"]
                 prompt = "\n".join(system_parts + user_parts)
@@ -132,11 +134,11 @@ class AIClient:
                     model=base_name,
                     contents=prompt
                 )
-                print(f"[AI] Google GenAI SDK 성공: {base_name}")
+                print(f"[AI] Google GenAI SDK(v1) 성공: {base_name}")
                 return response.text or ""
             except Exception as e:
                 last_error = e
-                print(f"[AI] Google GenAI SDK 실패: {str(e)[:150]}...")
+                print(f"[AI] Google GenAI SDK(v1) 실패: {str(e)[:150]}...")
         
         # LiteLLM fallback
         for variant in model_variants:
